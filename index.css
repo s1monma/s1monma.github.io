@@ -94,11 +94,13 @@ form {
   
   /* Style the counter cards */
   .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+    box-shadow: 0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%); /* this gem from copy paste css adds the "Finastra" effect */
     padding: 16px;
     text-align: center;
     background-color: #f1f1f1;
   }
+
+
   
   /* Responsive columns - one column layout (vertical) on small screens */
   @media screen and (max-width: 600px) {
@@ -133,7 +135,7 @@ form {
   
   /* Add a hover effect for buttons */
   button:hover {
-    box-shadow: 0 8px 22px 0 rgb(37 44 97 / 15%), 0 4px 6px 0 rgb(93 100 148 / 20%);
+    box-shadow: 0 8px 22px 0 rgb(37 44 97 / 35%), 0 4px 6px 0 rgb(93 100 148 / 50%);
   }
   
   /* Extra style for the cancel button (red) */
