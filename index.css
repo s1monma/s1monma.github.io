@@ -5,6 +5,28 @@ background: linear-gradient(to right, #32373B, #32373B); /* W3C, IE 10+/ Edge, F
 
 } 
 
+::-webkit-scrollbar {
+  background-color: peachpuff;
+  width: 1rem;
+}
+::-webkit-scrollbar-thumb {
+  background-color: tomato;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: coral;
+}
+::-webkit-scrollbar-thumb:active {
+  background-color: orangered;
+}
+* {
+  box-sizing: border-box;
+  font: 1rem/1rem sans-serif;
+  margin: 0;
+  padding: 0;
+  -webkit-overflow-scrolling: touch;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
     font-style: oblique;
 }
