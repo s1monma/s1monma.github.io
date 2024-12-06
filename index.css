@@ -1,4 +1,4 @@
-body {
+ebody {
     background-color: #f5f5dc; /* Light beige background */
     font-family: Arial, Helvetica, sans-serif;
     font-style: oblique;
@@ -87,3 +87,25 @@ button:hover {
     font: 400 18px/1 'Kaushan Script', cursive;
     color: #888;
 }
+
+.24th {
+    position: relative;
+    width: 220px;
+    margin: 20px auto;
+}
+
+.24th img {
+    border: 10px solid #fff;
+    border-bottom: 45px solid #fff;
+    box-shadow: 3px 3px 3px #777;
+}
+
+.24th p {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    bottom: 0;
+    font: 400 18px/1 'Dancing Script', cursive; /* Updated font-family */
+    color: #888;
+}
+
