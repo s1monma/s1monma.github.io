@@ -10,6 +10,15 @@ h1 {
     color: #4a4a4a; /* Neutral dark gray for readability */
 }
 
+.hide {
+  display: none;
+}
+
+.myDIV:hover + .hide {
+  display: block;
+  color: red;
+}
+
 .timeline {
     margin: 30px auto;
     max-width: 800px;
