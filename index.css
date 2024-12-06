@@ -1,177 +1,78 @@
 body {
-    background: #32373B;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #32373B, #73D2DE);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #32373B, #73D2DE); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-} 
-
-
-
-body {
+    background-color: #f5f5dc; /* Light beige background */
+    font-family: Arial, Helvetica, sans-serif;
     font-style: oblique;
-}
-.blue-text {
-    font-size: 10px;
-}
-
-.padding {
-    margin-top: 10vh;
+    margin: 0;
+    padding: 0;
 }
 
-.alert-danger:hover {
-    background: black;
-    color: pink;
-    transition: 10s;
+h1 {
+    color: #4a4a4a; /* Neutral dark gray for readability */
 }
 
-.container {
-    margin-left: 12vw;
+.timeline {
+    margin: 30px auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Adding the polaroid effect to my image */
+.timeline-item {
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    border-left: 3px solid #007bff; /* Blue line for the timeline */
+}
+
+.timeline-item h3 {
+    margin: 0 0 5px;
+    color: #333333;
+}
+
+.timeline-item p {
+    margin: 0;
+    color: #555555;
+}
+
+/* Button Styles */
+button {
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    font-weight: 600;
+    color: rgb(72, 76, 122);
+    font-size: 14px;
+    height: 38px;
+    padding: 8px 24px;
+    border-radius: 50px;
+    background-image: linear-gradient(180deg, #fff, #f5f5fa);
+    box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
+    transition: all 0.2s ease-out;
+}
+
+button:hover {
+    box-shadow: 0 8px 22px 0 rgb(37 44 97 / 35%), 0 4px 6px 0 rgb(93 100 148 / 50%);
+}
 
 .polaroid {
-  position: relative;
-  width: 220px;
+    position: relative;
+    width: 220px;
+    margin: 20px auto;
 }
- 
+
 .polaroid img {
-  border: 10px solid #fff;
-  border-bottom: 45px solid #fff;
-  -webkit-box-shadow: 3px 3px 3px #777;
-     -moz-box-shadow: 3px 3px 3px #777;
-          box-shadow: 3px 3px 3px #777;
+    border: 10px solid #fff;
+    border-bottom: 45px solid #fff;
+    box-shadow: 3px 3px 3px #777;
 }
- 
+
 .polaroid p {
-  position: absolute;
-  text-align: center;
-  width: 100%;
-  bottom: 0px;
-  font: 400 18px/1 'Kaushan Script', cursive;
-  color: #888;
-}
-
-
-<body>
-	<div class="ball"></div>
-</body>
-
-</html>
-
-
-/* Bordered form */
-form {
-    border: 3px solid #f1f1f1;
-  }
-  
-  /* Full-width inputs */
-  input[type=text], input[type=password] {
+    position: absolute;
+    text-align: center;
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  
-  /* Float four columns side by side */
-  .column {
-    float: left;
-    width: 25%;
-    padding: 0 10px;
-  }
-  
-  /* Remove extra left and right margins, due to padding in columns */
-  .row {margin: 0 -5px;}
-  
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  
-  /* Style the counter cards */
-  .card {
-    box-shadow: 0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%); /* this gem from copy paste css adds the "Finastra" effect */
-    padding: 16px;
-    text-align: center;
-    background-color: #f1f1f1;
-  }
-
-
-  
-  /* Responsive columns - one column layout (vertical) on small screens */
-  @media screen and (max-width: 600px) {
-    .column {
-      width: 100%;
-      display: block;
-      margin-bottom: 20px;
-    }
-  }
-  
-  /* Set a style for all buttons */
-  button {
-    display: inline-block;
-                outline: 0;
-                border: 0;
-                cursor: pointer;
-                font-weight: 600;
-                color: rgb(72, 76, 122);
-                font-size: 14px;
-                height: 38px;
-                padding: 8px 24px;
-                border-radius: 50px;
-                background-image: linear-gradient(180deg,#fff,#f5f5fa);
-                box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
-                transition: all .2s ease-out;
-  
-                    
-  }
-
-                
-                
-  
-  /* Add a hover effect for buttons */
-  button:hover {
-    box-shadow: 0 8px 22px 0 rgb(37 44 97 / 35%), 0 4px 6px 0 rgb(93 100 148 / 50%);
-  }
-  
-  /* Extra style for the cancel button (red) */
-  .cancelbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #f44336;
-  }
-  
-  /* Center the avatar image inside this container */
-  .imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-  }
-  
-  /* Avatar image */
-  img.avatar {
-    width: 40%;
-    border-radius: 50%;
-  }
-  
-  /* Add padding to containers */
-  .container {
-    padding: 16px;
-  }
-  
-  /* The "Forgot password" text */
-  span.psw {
-    float: right;
-    padding-top: 16px;
-  }
+    bottom: 0;
+    font: 400 18px/1 'Kaushan Script', cursive;
+    color: #888;
+}
