@@ -228,7 +228,7 @@ button:active {
 
 .polaroid img {
     border: 10px solid #fff;
-    border-bottom: 45px solid #fff;
+    border-bottom: 65px solid #fff;
     box-shadow: 3px 3px 3px #777;
 }
 
@@ -245,12 +245,12 @@ button:active {
 .24th {
     position: relative;
     width: 220px;
-    margin: 20px auto;
+    margin: 30px auto;
 }
 
 .24th img {
     border: 10px solid #fff;
-    border-bottom: 45px solid #fff;
+    border-bottom: 65px solid #fff;
     box-shadow: 3px 3px 3px #777;
 }
 
