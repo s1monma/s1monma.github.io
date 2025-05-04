@@ -8,8 +8,8 @@ body {
 
 label .cardWrapper {
   position: relative;
-  height: 5vmin;
-  width: calc(5vmin / 1.4);
+  height: 15vmin;
+  width: calc(15vmin / 1.4);
   background-color: royalblue;
   background-image: repeating-linear-gradient(
       120deg,
