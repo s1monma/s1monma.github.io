@@ -1,9 +1,9 @@
-body {
+/*  body {
     background: #F5F5DC;  /* Fallback for old browsers */
     background: -webkit-linear-gradient(to right, #F5F5DC, #FFF4F2);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #F5F5DC, #FFF4F2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     font-family: Georgia, serif; /* Added a default font */
-}
+}  */
 
 body {
   background-color: #ececec;
