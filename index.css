@@ -141,7 +141,7 @@ h1 {
 .timeline-item {
     margin-bottom: 20px;
     padding: 10px 15px;
-    border-left: 3px solid #007bff; /* Blue line for the timeline */
+    border-left: 3px solid #ffffff; /* white line for the timeline */
     position: relative; /* Added for better positioning */
 }
 
@@ -296,7 +296,7 @@ h1 {
 .timeline-item {
     margin-bottom: 20px;
     padding: 10px 15px;
-    border-left: 3px solid #007bff; /* Blue line for the timeline */
+    border-left: 3px solid #ffffff; /* white line for the timeline */
     position: relative; /* Added for better positioning */
 }
 
