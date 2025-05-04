@@ -64,90 +64,171 @@
         div {
             margin-bottom: 25px; /* General spacing between div elements */
         }
+        
+        /* Navigation Banner Styles */
+        .nav-banner {
+            background-color: #3498db;
+            width: 100%;
+            overflow: hidden;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .nav-banner ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .nav-banner li {
+            float: left;
+        }
+        
+        .nav-banner li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 16px 24px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-banner li a:hover {
+            background-color: #2980b9;
+        }
+        
+        .nav-banner li a.active {
+            background-color: #2c3e50;
+        }
+        
+        /* Make the banner responsive */
+        @media screen and (max-width: 600px) {
+            .nav-banner ul {
+                flex-direction: column;
+            }
+            
+            .nav-banner li {
+                float: none;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
-    <div>
-        <a href="https://www.linkedin.com/in/simon-mpy/">
-            <button class="btn btn-a">Here's my LinkedIn</button>
-        </a>
+    <!-- New Navigation Banner -->
+    <div class="nav-banner">
+        <ul>
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#sports">Sports</a></li>
+            <li><a href="#music">Music</a></li>
+            <li><a href="#food">Food</a></li>
+            <li><a href="#language">Language</a></li>
+        </ul>
     </div>
-    <div>
-        <a href="https://www.instagram.com/s1monma">
-            <button class="btn btn-lg btn-warning">Follow my Instagram 📷</button>
-        </a>
-    </div>
-    <div>
-        <a href="https://www.dins.com/blog24">
-            <button class="btn btn-lg btn-warning">Europe tour 🇩🇪</button>
-        </a>
-    </div>
-
     
-    <div class="info-box">
-        
-    <div class="myDIV">Books read as of 2024.</div>
-    <div class="hide">Crying in H Mart | Michelle Zauner </div>
-    <div class="hide">Seven Ages of Death | Richard Shepard </div>
-
-    <div class="section">
-        <div class="myDIV">Books from 2020</div>
-        <div class="hide">
-            <ul class="book-list">
-                <li class="complete">1984 | George Orwell</li>
-                <li class="not-started">Fahrenheit 451 | Ray Bradbury</li>
-                <li class="in-progress">The Kite Runner | Khaled Hosseini</li>
-                <li class="complete">The Fault in Our Stars | John Green</li>
-            </ul>
+    <div id="home">
+        <div>
+            <a href="https://www.linkedin.com/in/simon-mpy/">
+                <button class="btn btn-a">Here's my LinkedIn</button>
+            </a>
+        </div>
+        <div>
+            <a href="https://www.instagram.com/s1monma">
+                <button class="btn btn-lg btn-warning">Follow my Instagram 📷</button>
+            </a>
+        </div>
+        <div>
+            <a href="https://www.dins.com/blog24">
+                <button class="btn btn-lg btn-warning">Europe tour 🇩🇪</button>
+            </a>
         </div>
     </div>
-    </div>
 
     <div class="info-box">
-
-    <div class="section">
-        <div class="myDIV">Books from 2021</div>
-        <div class="hide">
-            <ul class="book-list">
-                <li class="complete">Becoming | Michelle Obama</li>
-                <li class="in-progress">This is Going to Hurt | Adam Kay</li>
-                <li class="not-started">Range | David Epstein</li>
-                <li class="complete">Criminal Sociology | Ferri Enrico</li>
-                <li class="complete">A Little Life | Hanya Yanagihara</li>
-                <li class="complete">The War on Normal People | Andrew Yang</li>
-                <li class="complete">The Paper Menagerie | Ken Liu</li> 
-                <li class="complete">Being Mortal | Atul Gawande</li>
-                <li class="in-progress">Your Brain on Music | Daniel Levitin</li>
-                <li class="complete">Building a Life Worth Living | Marsha Linehan</li>
-                <li class="complete">Never Let Me Go | Kazuo Ishiguro</li>
-                <li class="complete">Queen's Gambit | Walter Tevis</li>
-                <li class="complete">Know My Name | Chanel Miller</li>
-                <li class="complete">Astrophysics for People in a Hurry | Neil deGrasse Tyson</li>
-                <li class="complete">Einstein's Unfinished Symphony | Marcia Bartusiak</li>
-                <li class="complete">Eleanor Oliphant is Completely Fine | Gail Honeyman</li>
-                <li class="complete">The Martian | Andy Weir</li>
-                <li class="complete">Loss Adjustment | Linda Collins</li>
-                <li class="complete">Guns, Germs, and Steel | Jared Diamond</li>
-            </ul>
-        </div>
-    </div>
-    </div>
-
-    
-    <div class="info-box">
+        <div class="myDIV">Books read as of 2024.</div>
+        <div class="hide">Crying in H Mart | Michelle Zauner </div>
+        <div class="hide">Seven Ages of Death | Richard Shepard </div>
 
         <div class="section">
-        <div class="myDIV">Unfinished Books</div>
-        <div class="hide">
-            <ul class="book-list">
-                <li class="in-progress">One Hundred Years of Solitude | Gabriel García Márquez</li>
-                <li class="not-started">Hiking with Nietzsche | John Kaag</li>
-                <li class="in-progress">The Remains of the Day | Kazuo Ishiguro</li>
-            </ul>
+            <div class="myDIV">Books from 2020</div>
+            <div class="hide">
+                <ul class="book-list">
+                    <li class="complete">1984 | George Orwell</li>
+                    <li class="not-started">Fahrenheit 451 | Ray Bradbury</li>
+                    <li class="in-progress">The Kite Runner | Khaled Hosseini</li>
+                    <li class="complete">The Fault in Our Stars | John Green</li>
+                </ul>
+            </div>
         </div>
     </div>
+
+    <div class="info-box">
+        <div class="section">
+            <div class="myDIV">Books from 2021</div>
+            <div class="hide">
+                <ul class="book-list">
+                    <li class="complete">Becoming | Michelle Obama</li>
+                    <li class="in-progress">This is Going to Hurt | Adam Kay</li>
+                    <li class="not-started">Range | David Epstein</li>
+                    <li class="complete">Criminal Sociology | Ferri Enrico</li>
+                    <li class="complete">A Little Life | Hanya Yanagihara</li>
+                    <li class="complete">The War on Normal People | Andrew Yang</li>
+                    <li class="complete">The Paper Menagerie | Ken Liu</li> 
+                    <li class="complete">Being Mortal | Atul Gawande</li>
+                    <li class="in-progress">Your Brain on Music | Daniel Levitin</li>
+                    <li class="complete">Building a Life Worth Living | Marsha Linehan</li>
+                    <li class="complete">Never Let Me Go | Kazuo Ishiguro</li>
+                    <li class="complete">Queen's Gambit | Walter Tevis</li>
+                    <li class="complete">Know My Name | Chanel Miller</li>
+                    <li class="complete">Astrophysics for People in a Hurry | Neil deGrasse Tyson</li>
+                    <li class="complete">Einstein's Unfinished Symphony | Marcia Bartusiak</li>
+                    <li class="complete">Eleanor Oliphant is Completely Fine | Gail Honeyman</li>
+                    <li class="complete">The Martian | Andy Weir</li>
+                    <li class="complete">Loss Adjustment | Linda Collins</li>
+                    <li class="complete">Guns, Germs, and Steel | Jared Diamond</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
+    <div class="info-box">
+        <div class="section">
+            <div class="myDIV">Unfinished Books</div>
+            <div class="hide">
+                <ul class="book-list">
+                    <li class="in-progress">One Hundred Years of Solitude | Gabriel García Márquez</li>
+                    <li class="not-started">Hiking with Nietzsche | John Kaag</li>
+                    <li class="in-progress">The Remains of the Day | Kazuo Ishiguro</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section placeholders for new navigation items -->
+    <div id="sports" class="info-box" style="display: none;">
+        <h2>Sports</h2>
+        <p>Content about sports will go here.</p>
+    </div>
+    
+    <div id="music" class="info-box" style="display: none;">
+        <h2>Music</h2>
+        <p>Content about music will go here.</p>
+    </div>
+    
+    <div id="food" class="info-box" style="display: none;">
+        <h2>Food</h2>
+        <p>Content about food will go here.</p>
+    </div>
+    
+    <div id="language" class="info-box" style="display: none;">
+        <h2>Language</h2>
+        <p>Content about language will go here.</p>
+    </div>
     
     <div class="polaroid">
         <p>Simon's current read! Updated 30/04/2022</p>
@@ -158,24 +239,24 @@
     
     <hr/>
     
-<div class="timeline">
-    <div class="timeline-item">
-        <h3>2022</h3>
-        <p>Started my undergraduate journey at Harvard.</p>
+    <div class="timeline">
+        <div class="timeline-item">
+            <h3>2022</h3>
+            <p>Started my undergraduate journey at Harvard.</p>
+        </div>
+        <div class="timeline-item">
+            <h3>2023</h3>
+            <p>Started my romantic relationship with FJ!</p>
+        </div>
+        <div class="timeline-item">
+            <h3>2024</h3>
+            <p>Road trip: North America, Europe, Asia, cat.</p>
+        </div>
+        <div class="timeline-item">
+            <h3>2025</h3>
+            <p>Got a few summer research programs and a un-ideal job offer.</p>
+        </div>
     </div>
-    <div class="timeline-item">
-        <h3>2023</h3>
-        <p>Started my romantic relationship with FJ!</p>
-    </div>
-    <div class="timeline-item">
-        <h3>2024</h3>
-        <p>Road trip: North America, Europe, Asia, cat.</p>
-    </div>
-    <div class="timeline-item">
-        <h3>2025</h3>
-        <p>Got a few summer research programs and a un-ideal job offer.</p>
-    </div>
-</div>
 
     <hr/>
     
@@ -235,5 +316,40 @@
         <p>Simon's current read! Updated 03May2025</p>
         <img src="RUSSIABK1.jpeg" alt="SimonFJ">
     </div>
+    
+    <script>
+        // Simple JavaScript to handle navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all navigation links
+            const navLinks = document.querySelectorAll('.nav-banner a');
+            
+            // Add click event listeners to each link
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove 'active' class from all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add 'active' class to clicked link
+                    this.classList.add('active');
+                    
+                    // Get the target section ID
+                    const targetId = this.getAttribute('href').substring(1);
+                    
+                    // Hide all content sections
+                    document.querySelectorAll('#home, #sports, #music, #food, #language').forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    // Show the target section
+                    document.getElementById(targetId).style.display = 'block';
+                });
+            });
+            
+            // Show home section by default
+            document.getElementById('home').style.display = 'block';
+        });
+    </script>
 </body>
 </html>
