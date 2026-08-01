@@ -5,121 +5,440 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Simon 马培尧</title>
+    <meta name="description" content="Simon Ma's personal website — Harvard grad, AI & startups, food lover, polyglot.">
+    <link rel="icon" type="image/x-icon" href="./FJSIM_20241104092632">
     <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="index.css">
-    <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Nunito:wght@300;400;600;700;800;900&display=swap' rel='stylesheet'>
+    <style>
+        /* ── Section spacing (inline overrides kept minimal) ── */
+        .section      { margin-bottom: 20px; }
+        .timeline      { margin-top: 40px; margin-bottom: 40px; }
+        .timeline-item { padding: 20px; margin-bottom: 25px; }
+        .row           { margin-top: 40px; margin-bottom: 40px; }
+
+        /* ── Navigation Banner inline overrides ─────────────── */
+        .nav-banner {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            overflow: hidden;
+            z-index: 1000;
+        }
+        .banner-image {
+            width: 100%;
+            height: 220px;
+            background-image: url('https://assets.codepen.io/2722301/cards.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .banner-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(180,220,255,0.28), rgba(140,195,250,0.55));
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+        }
+        .nav-menu {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.28);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255,255,255,0.55);
+        }
+        .nav-menu ul {
+            list-style: none;
+            margin: 0; padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .nav-menu li a {
+            display: block;
+            color: rgba(255,255,255,0.92);
+            padding: 16px 24px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            border-radius: 30px 30px 0 0;
+            transition: all 0.3s ease;
+        }
+        .nav-menu li a:hover   { background: rgba(255,255,255,0.38); }
+        .nav-menu li a.active  { background: rgba(255,255,255,0.48); color: #5a90c0; }
+        .banner-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -80%);
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 0 2px 20px rgba(100,160,220,0.8), 0 0 40px rgba(255,255,255,0.5);
+            text-align: center;
+            font-family: 'Kaushan Script', cursive;
+        }
+
+        @media screen and (max-width: 600px) {
+            .nav-banner ul { flex-direction: column; }
+            .nav-banner li { float: none; text-align: center; }
+        }
+    </style>
 </head>
 <body>
-        
-              <div><a href="https://www.linkedin.com/in/simon-ma-%E9%A9%AC%E5%9F%B9%E5%B0%A7-24877255/">
-                <button class="btn btn-a">Here's my LinkedIn</button></a>
+
+    <!-- ── Navigation Banner ─────────────────────────────── -->
+    <div class="nav-banner">
+        <div class="banner-image">
+            <div class="banner-overlay"></div>
+            <h1 class="banner-title">Simon 马培尧</h1>
+            <div class="nav-menu">
+                <ul>
+                    <li><a href="#home"     class="active">Home</a></li>
+                    <li><a href="#sports"   >Sports</a></li>
+                    <li><a href="#music"    >Music</a></li>
+                    <li><a href="#food"     >Food</a></li>
+                    <li><a href="#language" >Language</a></li>
+                    <li><a href="#books"    >Books</a></li>
+                </ul>
             </div>
-    <div class="container"></div>
-    <div><a href="https://www.instagram.com/s1monma"></div>
-      <button class="btn btn-lg btn-warning">Follow my Instagram 📷 </button>
-    </a>
-
-    <div><a href="https://mp.weixin.qq.com/s/QWe9F7HY1wp8-hHZaZYymg"></div>
-      <button class="btn btn-lg btn-warning">德意志🇩🇪</button>
-    </a>
-
-    <div></div>
-    <div>
-        <div class="alert-danger"></div>
+        </div>
     </div>
-    <!-- Comment for self reference-->
-    <div class="polaroid">
-  <p>Simon's current read! Updated 30/04/2022</p>
-  <img src="Image56 The World Without Us Alan Weisman.png"></img>
-</div>
-<div class="col-lg-3 col-md-4 col-6"></div>
-    <h1 style="color:rgb(255, 252, 231)">If you'd like to chat or ask about anything, feel free to email simon_smile2011@yahoo.com.sg! (๑‾ ꇴ ‾๑)</h1>
-<!-- line break below-->
-    <hr/>
-    <div class="row">
-            <div class="column">
-            <a href="./blog1.html">
-            <div class="card">Simon's 1st BLOG</div> </a>
-            </div>
-            <div class="column">
-              <div class="card">Thoughts</div>
-            </div>
-            <div class="column">
-              <div class="card">Personal statement</div>
-            </div>
-            <div class="column">
-              <div class="card">Work in progress</div>
-            </div>
-          </div>
-    <hr/>
-          <div class="row">
-                <div class="column">
-                <a href="./blog2.html">
-                <div class="card">Simon's SECOND BLOG</div> </a>
-                </div>
-                <div class="column">
-                  <div class="card">Reflections</div>
-                </div>
-                <div class="column">
-                  <div class="card">Essay</div>
-                </div>
-                <div class="column">
-                  <div class="card">Surprise</div>
-                </div>
-              </div>
 
-    <h3></h3>
-    
+    <!-- ── Home ──────────────────────────────────────────── -->
+    <div id="home">
+        <div>
+            <a href="https://www.linkedin.com/in/simon-mpy/">
+                <button class="btn btn-a">Here's my LinkedIn</button>
+            </a>
+        </div>
+        <div>
+            <a href="https://www.instagram.com/s1monma">
+                <button class="btn btn-lg btn-warning">Follow my Instagram 📷</button>
+            </a>
+        </div>
+        <div>
+            <a href="https://www.dins.com/blog24">
+                <button class="btn btn-lg btn-warning">Europe tour 🇩🇪</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- ── Books ─────────────────────────────────────────── -->
+    <div id="books" class="info-box" style="display: none;">
+        <h2>Books</h2>
+
+        <div class="myDIV">Books read as of 2025</div>
+        <div class="hide">Crying in H Mart | Michelle Zauner</div>
+        <div class="hide">Prozac Nation | Elizabeth Wurtzel</div>
+        <div class="hide">Seven Ages of Death | Richard Shepard</div>
+
+        <div class="section">
+            <div class="myDIV">Books from 2020</div>
+            <div class="hide">
+                <ul class="book-list">
+                    <li class="complete">1984 | George Orwell</li>
+                    <li class="not-started">Fahrenheit 451 | Ray Bradbury</li>
+                    <li class="in-progress">The Kite Runner | Khaled Hosseini</li>
+                    <li class="complete">The Fault in Our Stars | John Green</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="myDIV">Books from 2021</div>
+            <div class="hide">
+                <ul class="book-list">
+                    <li class="complete">Becoming | Michelle Obama</li>
+                    <li class="in-progress">This is Going to Hurt | Adam Kay</li>
+                    <li class="not-started">Range | David Epstein</li>
+                    <li class="complete">Criminal Sociology | Ferri Enrico</li>
+                    <li class="complete">A Little Life | Hanya Yanagihara</li>
+                    <li class="complete">The War on Normal People | Andrew Yang</li>
+                    <li class="complete">The Paper Menagerie | Ken Liu</li>
+                    <li class="complete">Being Mortal | Atul Gawande</li>
+                    <li class="in-progress">Your Brain on Music | Daniel Levitin</li>
+                    <li class="complete">Building a Life Worth Living | Marsha Linehan</li>
+                    <li class="complete">Never Let Me Go | Kazuo Ishiguro</li>
+                    <li class="complete">Queen's Gambit | Walter Tevis</li>
+                    <li class="complete">Know My Name | Chanel Miller</li>
+                    <li class="complete">Astrophysics for People in a Hurry | Neil deGrasse Tyson</li>
+                    <li class="complete">Einstein's Unfinished Symphony | Marcia Bartusiak</li>
+                    <li class="complete">Eleanor Oliphant is Completely Fine | Gail Honeyman</li>
+                    <li class="complete">The Martian | Andy Weir</li>
+                    <li class="complete">Loss Adjustment | Linda Collins</li>
+                    <li class="complete">Guns, Germs, and Steel | Jared Diamond</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="myDIV">Unfinished Books</div>
+            <div class="hide">
+                <ul class="book-list">
+                    <li class="in-progress">One Hundred Years of Solitude | Gabriel García Márquez</li>
+                    <li class="not-started">Hiking with Nietzsche | John Kaag</li>
+                    <li class="in-progress">The Remains of the Day | Kazuo Ishiguro</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Sports ─────────────────────────────────────────── -->
+    <div id="sports" class="info-box" style="display: none;">
+        <h2>Sports</h2>
+        <p>Documenting delayed onset muscle growth. PR for bench is 65kg.</p>
+    </div>
+
+    <!-- ── Music ─────────────────────────────────────────── -->
+    <div id="music" class="info-box" style="display: none;">
+        <h2>Music</h2>
+        <p>Currently practising "Demons" and "Numb" guitar chords.</p>
+        <audio controls autoplay>
+            <source src="horse.ogg" type="audio/ogg">
+            <source src="AdoReadymade.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <!-- ── Food ──────────────────────────────────────────── -->
+    <div id="food" class="info-box" style="display: none;">
+        <h2>Food 🍜</h2>
+        <p>Yummy spring shabu shabu meal! Reminiscent of <a href="./blog0.html" target="_blank">Japan</a></p>
+
+        <!-- Interactive map (existing My Maps) -->
+        <div class="food-map-wrap">
+            <iframe
+                src="https://www.google.com/maps/d/u/0/embed?mid=1EeaW4YlKb1wJy5gy4QjRBx-5yeiuzMg&ehbc=2E312F"
+                height="460"
+                allowfullscreen
+                loading="lazy">
+            </iframe>
+        </div>
+
+        <!-- Food review cards — paste Google Keep notes into the `reviews` array in the script below -->
+        <div class="food-reviews" id="food-review-cards"></div>
+    </div>
+
+    <!-- ── Language ───────────────────────────────────────── -->
+    <div id="language" class="info-box" style="display: none;">
+        <h2>Language</h2>
+        <p>I have a 90 day streak on Duolingo Russian. Я работаю над улучшением.</p>
+    </div>
+
+    <!-- ── Polaroid + email (always visible) ────────────── -->
+    <div class="polaroid">
+        <p>Simon's current read! Updated 03/05/2025</p>
+        <img src="RUSSIABK1.jpeg" alt="Simon's current read">
+    </div>
+
+    <h1>If you'd like to chat or ask about anything, feel free to email simon_smile2011@yahoo.com.sg! (๑‾ ꇴ ‾๑)</h1>
+
+    <hr/>
+
+    <!-- ── Timeline ──────────────────────────────────────── -->
+    <div class="timeline">
+        <div class="timeline-item">
+            <h3>2022</h3>
+            <p>Started my undergraduate journey at Harvard.</p>
+        </div>
+        <div class="timeline-item">
+            <h3>2023</h3>
+            <p>Started my romantic relationship with FJ!</p>
+        </div>
+        <div class="timeline-item">
+            <h3>2024</h3>
+            <p>First pet Mili.</p>
+        </div>
+        <div class="timeline-item">
+            <h3>2025</h3>
+            <p>Did AI and got a start-up PM offer.</p>
+        </div>
+        <div class="timeline-item">
+            <h3>2026</h3>
+            <p>Graduated, started work at Keystone.</p>
+        </div>
+    </div>
+
+    <hr/>
+
+    <!-- ── Blog card rows ────────────────────────────────── -->
+    <div class="row">
+        <div class="column">
+            <a href="./blog1.html"><div class="card">Simon's 1st BLOG</div></a>
+        </div>
+        <div class="column">
+            <a href="./blog3.html"><div class="card">Thoughts</div></a>
+        </div>
+        <div class="column">
+            <a href="./blog4.html"><div class="card">Food Name Edition</div></a>
+        </div>
+        <div class="column">
+            <div class="card">Work in progress</div>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+        <div class="column">
+            <a href="./blog2.html"><div class="card">Simon's SECOND BLOG</div></a>
+        </div>
+        <div class="column"><div class="card">Reflections</div></div>
+        <div class="column"><div class="card">Essay</div></div>
+        <div class="column"><div class="card">Surprise</div></div>
+    </div>
+
     <p class="padding">Underperforming once won't rob the past of its meaning; overperforming once won't rid the future of its volatility.</p>
 
-
-
-    <ol class="blue-text">
-        <li>Sleep</li>
-        <li>Eat</li>
-        <li>Exercise</li>
-    </ol>
-
     <form>
-        <input type="text">
-        <input type="form">
+        <input type="text" placeholder="Enter text">
+        <input type="submit" value="Submit">
     </form>
 
-<div class="container"></div>
-    <div class="row">
-            <div class="col-6">
-                hello
-            </div>
-            </div>
-
+    <div align="center">
+        <img style="max-width: 70vw; border-radius: 24px;"
+             src="https://upload.wikimedia.org/wikipedia/commons/8/86/Snow_and_Pforzheimer_House%2C_Harvard_Campus%2C_Cambridge%2C_Massachusetts.JPG"
+             alt="Harvard Campus">
     </div>
-<div align="center"> 
-    <img style="max-width: 70vw" src="https://images3.alphacoders.com/823/82317.jpg">
-</div>
 
-<form action="action_page.php">
-        <div class="imgcontainer">
-          <img src="Haustier (2).jpg" alt="Haustier"></img>
+    <!-- ── Live Location Widget ───────────────────────────── -->
+    <div class="location-widget">
+        <h3>📍 Current Location</h3>
+        <p class="location-status" id="location-status">Click below to share your live position</p>
+        <button class="location-btn" id="locate-btn" onclick="detectLocation()">Detect My Location</button>
+        <div class="location-map-frame" id="location-map-frame">
+            <iframe id="location-map-iframe" src="" allowfullscreen loading="lazy"></iframe>
         </div>
-      
-        <div class="container">
-          <label for="uname"><b>Username</b></label>
-          <input type="text" placeholder="Enter Username" name="uname" required>
-      
-          <label for="psw"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password" name="psw" required>
-      
-          <button type="submit">Login</button>
-          <label>
-            <input type="checkbox" checked="checked" name="remember"> Remember me
-          </label>
-        </div>
-      
-        <div class="container" style="background-color:#f1f1f1">
-          <button type="button" class="cancelbtn">Cancel</button>
-          <span class="psw">Forgot <a href="#">password?</a></span>
-        </div>
-      </form>
-   
+    </div>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <script>
+    // ── Navigation ──────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function () {
+        const navLinks = document.querySelectorAll('.nav-banner a');
+        const sections = ['home', 'sports', 'music', 'food', 'language', 'books'];
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                navLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+
+                const targetId = this.getAttribute('href').substring(1);
+
+                sections.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.style.display = 'none';
+                });
+
+                const target = document.getElementById(targetId);
+                if (target) target.style.display = 'block';
+            });
+        });
+
+        document.getElementById('home').style.display = 'block';
+        renderFoodCards();
+    });
+
+    // ── Live Geolocation ─────────────────────────────────────
+    function detectLocation() {
+        const status  = document.getElementById('location-status');
+        const mapWrap = document.getElementById('location-map-frame');
+        const mapIframe = document.getElementById('location-map-iframe');
+        const btn = document.getElementById('locate-btn');
+
+        if (!navigator.geolocation) {
+            status.textContent = '⚠️ Geolocation is not supported by your browser.';
+            return;
+        }
+
+        status.textContent = '🔍 Detecting location…';
+        btn.disabled = true;
+
+        navigator.geolocation.getCurrentPosition(
+            function (pos) {
+                const lat = pos.coords.latitude.toFixed(5);
+                const lng = pos.coords.longitude.toFixed(5);
+
+                // Reverse-geocode with OpenStreetMap Nominatim (no API key needed)
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        const city    = data.address.city || data.address.town || data.address.village || data.address.county || '';
+                        const country = data.address.country || '';
+                        status.innerHTML = `📍 Currently in: <strong>${city}${city && country ? ', ' : ''}${country}</strong>`;
+                    })
+                    .catch(() => {
+                        status.textContent = `📍 Lat ${lat}, Lng ${lng}`;
+                    });
+
+                // Embed Google Maps centred on user's coordinates
+                mapIframe.src = `https://maps.google.com/maps?q=${lat},${lng}&z=13&output=embed`;
+                mapWrap.style.display = 'block';
+                btn.textContent = '↻ Refresh';
+                btn.disabled = false;
+            },
+            function (err) {
+                const msgs = {
+                    1: 'Permission denied — please allow location access.',
+                    2: 'Position unavailable.',
+                    3: 'Request timed out.'
+                };
+                status.textContent = '⚠️ ' + (msgs[err.code] || 'Unknown error.');
+                btn.disabled = false;
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
+        );
+    }
+
+    // ── Food Review Cards ────────────────────────────────────
+    // ✏️  Paste your Google Keep notes into this array!
+    // Each entry: { name, location, rating (1-5), date, note, emoji }
+    const reviews = [
+        {
+            name: "Yume Wo Katare",
+            location: "Cambridge, MA",
+            rating: 5,
+            date: "Spring 2025",
+            note: "Thick, soul-warming tonkotsu broth that hits differently after a long day. The communal table energy is unmatched — shout your dreams before you eat!",
+            emoji: "🍜"
+        },
+        {
+            name: "Shabu Shabu Spring",
+            location: "Boston, MA",
+            rating: 5,
+            date: "Spring 2025",
+            note: "Reminiscent of Japan. The dashi broth was incredibly clean and the wagyu slices melted instantly. Perfect for a rainy evening.",
+            emoji: "🥩"
+        },
+        {
+            name: "Cafe Sushi",
+            location: "Cambridge, MA",
+            rating: 4,
+            date: "2024",
+            note: "Solid omakase on a student budget. Salmon belly was a highlight. Gets busy — go early!",
+            emoji: "🍣"
+        }
+        // ← Add more reviews here from your Google Keep notes
+    ];
+
+    function renderFoodCards() {
+        const container = document.getElementById('food-review-cards');
+        if (!container) return;
+        container.innerHTML = reviews.map(r => `
+            <div class="food-card">
+                <div class="food-card-emoji">${r.emoji}</div>
+                <h4>${r.name}</h4>
+                <div class="food-location">📍 ${r.location} &nbsp;·&nbsp; ${r.date}</div>
+                <div class="food-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+                <p>${r.note}</p>
+            </div>
+        `).join('');
+    }
+    </script>
 </body>
 </html>
