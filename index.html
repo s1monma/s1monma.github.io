@@ -5,77 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Simon 马培尧</title>
+    <meta name="description" content="Simon Ma's personal website — Harvard grad, AI & startups, food lover, polyglot.">
     <link rel="icon" type="image/x-icon" href="./FJSIM_20241104092632">
     <link rel="stylesheet" href="index.css">
-    <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Nunito:wght@300;400;600;700;800;900&display=swap' rel='stylesheet'>
     <style>
-        /* Added inline styles for better spacing and padding */
-        .section {
-            margin-bottom: 20px; /* Increased gap between sections */
-        }
-        .myDIV {
-            padding: 20px; /* Added more padding to text boxes */
-            margin-bottom: 20px; /* Space between header and content */
-        }
-        .hide {
-            padding: 20px; /* Added padding to content boxes */
-            margin-bottom: 30px; /* More space after content boxes */
-        }
-        .book-list {
-            padding: 15px; /* Added padding to book lists */
-        }
-        .timeline {
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-        .timeline-item {
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-        .row {
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-        .info-box {
-            background-color: #e8f4f8;
-            border-left: 5px solid #3498db;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .card {
-            padding: 25px; /* More padding in cards */
-            margin: 15px; /* Added margin around cards */
-        }
-        .polaroid {
-            padding: 20px;
-            margin: 40px 0; /* Added vertical spacing */
-        }
-        .padding {
-            padding: 25px; /* Increased padding for the quote */
-            margin: 30px 0; /* Added spacing around the quote */
-        }
-        form {
-            padding: 20px;
-            margin: 30px 0;
-        }
-        hr {
-            margin: 40px 0; /* More space around horizontal rules */
-        }
-        div {
-            margin-bottom: 25px; /* General spacing between div elements */
-        }
-        
-               /* Custom Photo Banner Styles */
+        /* ── Section spacing (inline overrides kept minimal) ── */
+        .section      { margin-bottom: 20px; }
+        .timeline      { margin-top: 40px; margin-bottom: 40px; }
+        .timeline-item { padding: 20px; margin-bottom: 25px; }
+        .row           { margin-top: 40px; margin-bottom: 40px; }
+
+        /* ── Navigation Banner inline overrides ─────────────── */
         .nav-banner {
             position: sticky;
             top: 0;
             width: 100%;
             overflow: hidden;
             z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        
         .banner-image {
             width: 100%;
             height: 220px;
@@ -84,53 +32,43 @@
             background-position: center;
             position: relative;
         }
-        
         .banner-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(180,220,255,0.28), rgba(140,195,250,0.55));
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
         }
-        
         .nav-menu {
             position: absolute;
             bottom: 0;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background: rgba(255,255,255,0.28);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255,255,255,0.55);
         }
-        
         .nav-menu ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
+            list-style: none;
+            margin: 0; padding: 0;
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
         }
-        
-        .nav-menu li {
-            float: left;
-        }
-        
         .nav-menu li a {
             display: block;
-            color: white;
-            text-align: center;
+            color: rgba(255,255,255,0.92);
             padding: 16px 24px;
             text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            border-radius: 30px 30px 0 0;
+            transition: all 0.3s ease;
         }
-        
-        .nav-menu li a:hover {
-            background-color: rgba(41, 128, 185, 0.7);
-        }
-        
-        .nav-menu li a.active {
-            background-color: rgba(44, 62, 80, 0.8);
-        }
-        
+        .nav-menu li a:hover   { background: rgba(255,255,255,0.38); }
+        .nav-menu li a.active  { background: rgba(255,255,255,0.48); color: #5a90c0; }
         .banner-title {
             position: absolute;
             top: 50%;
@@ -139,60 +77,38 @@
             color: white;
             font-size: 2.5rem;
             font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 2px 20px rgba(100,160,220,0.8), 0 0 40px rgba(255,255,255,0.5);
             text-align: center;
             font-family: 'Kaushan Script', cursive;
         }
-        
-        
-        /* Make the banner responsive */
+
         @media screen and (max-width: 600px) {
-            .nav-banner ul {
-                flex-direction: column;
-            }
-            
-            .nav-banner li {
-                float: none;
-                text-align: center;
-            }
+            .nav-banner ul { flex-direction: column; }
+            .nav-banner li { float: none; text-align: center; }
         }
     </style>
 </head>
 <body>
-        <input type="checkbox" id="card_01" checked>
-<label for="card_01">
-  <div class="cardWrapper">
-    <div class="cardRandom"></div>
-  </div>
-</label>
-<input type="checkbox" id="card_02" checked>
-<label for="card_02">
-  <div class="cardWrapper">
-    <div class="cardRandom"></div>
-  </div>
-</label>
 
-
-
-
-        <div class="nav-banner">
+    <!-- ── Navigation Banner ─────────────────────────────── -->
+    <div class="nav-banner">
         <div class="banner-image">
             <div class="banner-overlay"></div>
             <h1 class="banner-title">Simon 马培尧</h1>
             <div class="nav-menu">
                 <ul>
-                    <li><a href="#home" class="active">Home</a></li>
-                    <li><a href="#sports">Sports</a></li>
-                    <li><a href="#music">Music</a></li>
-                    <li><a href="#food">Food</a></li>
-                    <li><a href="#language">Language</a></li>
-                    <li><a href="#books">Books</a></li>
-
+                    <li><a href="#home"     class="active">Home</a></li>
+                    <li><a href="#sports"   >Sports</a></li>
+                    <li><a href="#music"    >Music</a></li>
+                    <li><a href="#food"     >Food</a></li>
+                    <li><a href="#language" >Language</a></li>
+                    <li><a href="#books"    >Books</a></li>
                 </ul>
             </div>
         </div>
     </div>
-    
+
+    <!-- ── Home ──────────────────────────────────────────── -->
     <div id="home">
         <div>
             <a href="https://www.linkedin.com/in/simon-mpy/">
@@ -211,14 +127,14 @@
         </div>
     </div>
 
-    <!-- Books section (will be hidden by default and shown when Books nav is clicked) -->
+    <!-- ── Books ─────────────────────────────────────────── -->
     <div id="books" class="info-box" style="display: none;">
         <h2>Books</h2>
-      
-        <div class="myDIV">Books read as of 2025.</div>
-        <div class="hide">Crying in H Mart | Michelle Zauner </div>
-        <div class="hide">Prozac Nation | Elizabeth Wurtzel </div>
-        <div class="hide">Seven Ages of Death | Richard Shepard </div>
+
+        <div class="myDIV">Books read as of 2025</div>
+        <div class="hide">Crying in H Mart | Michelle Zauner</div>
+        <div class="hide">Prozac Nation | Elizabeth Wurtzel</div>
+        <div class="hide">Seven Ages of Death | Richard Shepard</div>
 
         <div class="section">
             <div class="myDIV">Books from 2020</div>
@@ -231,7 +147,7 @@
                 </ul>
             </div>
         </div>
-    
+
         <div class="section">
             <div class="myDIV">Books from 2021</div>
             <div class="hide">
@@ -242,7 +158,7 @@
                     <li class="complete">Criminal Sociology | Ferri Enrico</li>
                     <li class="complete">A Little Life | Hanya Yanagihara</li>
                     <li class="complete">The War on Normal People | Andrew Yang</li>
-                    <li class="complete">The Paper Menagerie | Ken Liu</li> 
+                    <li class="complete">The Paper Menagerie | Ken Liu</li>
                     <li class="complete">Being Mortal | Atul Gawande</li>
                     <li class="in-progress">Your Brain on Music | Daniel Levitin</li>
                     <li class="complete">Building a Life Worth Living | Marsha Linehan</li>
@@ -258,7 +174,7 @@
                 </ul>
             </div>
         </div>
-    
+
         <div class="section">
             <div class="myDIV">Unfinished Books</div>
             <div class="hide">
@@ -271,42 +187,59 @@
         </div>
     </div>
 
-    <!-- Section placeholders for new navigation items -->
+    <!-- ── Sports ─────────────────────────────────────────── -->
     <div id="sports" class="info-box" style="display: none;">
         <h2>Sports</h2>
         <p>Documenting delayed onset muscle growth. PR for bench is 65kg.</p>
     </div>
-    
+
+    <!-- ── Music ─────────────────────────────────────────── -->
     <div id="music" class="info-box" style="display: none;">
         <h2>Music</h2>
         <p>Currently practising "Demons" and "Numb" guitar chords.</p>
         <audio controls autoplay>
-          <source src="horse.ogg" type="audio/ogg">
-          <source src="AdoReadymade.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
+            <source src="horse.ogg" type="audio/ogg">
+            <source src="AdoReadymade.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
         </audio>
     </div>
-    
+
+    <!-- ── Food ──────────────────────────────────────────── -->
     <div id="food" class="info-box" style="display: none;">
-        <h2>Food</h2>
+        <h2>Food 🍜</h2>
         <p>Yummy spring shabu shabu meal! Reminiscent of <a href="./blog0.html" target="_blank">Japan</a></p>
-        <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1EeaW4YlKb1wJy5gy4QjRBx-5yeiuzMg&ehbc=2E312F" width="640" height="480"></iframe>
+
+        <!-- Interactive map (existing My Maps) -->
+        <div class="food-map-wrap">
+            <iframe
+                src="https://www.google.com/maps/d/u/0/embed?mid=1EeaW4YlKb1wJy5gy4QjRBx-5yeiuzMg&ehbc=2E312F"
+                height="460"
+                allowfullscreen
+                loading="lazy">
+            </iframe>
+        </div>
+
+        <!-- Food review cards — paste Google Keep notes into the `reviews` array in the script below -->
+        <div class="food-reviews" id="food-review-cards"></div>
     </div>
-    
+
+    <!-- ── Language ───────────────────────────────────────── -->
     <div id="language" class="info-box" style="display: none;">
         <h2>Language</h2>
-        <p>I have a 90 day streak on Duolingo Russian. Я работаю над улучшением. </p>
+        <p>I have a 90 day streak on Duolingo Russian. Я работаю над улучшением.</p>
     </div>
-    
+
+    <!-- ── Polaroid + email (always visible) ────────────── -->
     <div class="polaroid">
         <p>Simon's current read! Updated 03/05/2025</p>
         <img src="RUSSIABK1.jpeg" alt="Simon's current read">
     </div>
-    
+
     <h1>If you'd like to chat or ask about anything, feel free to email simon_smile2011@yahoo.com.sg! (๑‾ ꇴ ‾๑)</h1>
-    
+
     <hr/>
-    
+
+    <!-- ── Timeline ──────────────────────────────────────── -->
     <div class="timeline">
         <div class="timeline-item">
             <h3>2022</h3>
@@ -322,51 +255,41 @@
         </div>
         <div class="timeline-item">
             <h3>2025</h3>
-            <p>Got a few summer research programs and a un-ideal job offer.</p>
+            <p>Did AI and got a start-up PM offer.</p>
+        </div>
+        <div class="timeline-item">
+            <h3>2026</h3>
+            <p>Graduated, started work at Keystone.</p>
         </div>
     </div>
 
     <hr/>
-    
+
+    <!-- ── Blog card rows ────────────────────────────────── -->
     <div class="row">
         <div class="column">
-            <a href="./blog1.html">
-                <div class="card">Simon's 1st BLOG</div>
-            </a>
+            <a href="./blog1.html"><div class="card">Simon's 1st BLOG</div></a>
         </div>
         <div class="column">
-            <a href="./blog3.html">
-                <div class="card">Thoughts</div>
-            </a>
+            <a href="./blog3.html"><div class="card">Thoughts</div></a>
         </div>
         <div class="column">
-            <a href="./blog4.html">
-                <div class="card">Food NAme Edition</div>
-            </a>
+            <a href="./blog4.html"><div class="card">Food Name Edition</div></a>
         </div>
         <div class="column">
             <div class="card">Work in progress</div>
         </div>
     </div>
-    
+
     <hr/>
-    
+
     <div class="row">
         <div class="column">
-            <a href="./blog2.html">
-                <div class="card">Simon's SECOND BLOG</div>
-            </a>
+            <a href="./blog2.html"><div class="card">Simon's SECOND BLOG</div></a>
         </div>
-        <div class="column">
-            <div class="card">Reflections</div>
-        </div>
-        <div class="column">
-            <div class="card">Essay</div>
-        </div>
-        <div class="column">
-            <div class="card">Surprise</div>
-        </div>
-        
+        <div class="column"><div class="card">Reflections</div></div>
+        <div class="column"><div class="card">Essay</div></div>
+        <div class="column"><div class="card">Surprise</div></div>
     </div>
 
     <p class="padding">Underperforming once won't rob the past of its meaning; overperforming once won't rid the future of its volatility.</p>
@@ -376,48 +299,146 @@
         <input type="submit" value="Submit">
     </form>
 
-    <div align="center"> 
-        <img style="max-width: 70vw" src="https://upload.wikimedia.org/wikipedia/commons/8/86/Snow_and_Pforzheimer_House%2C_Harvard_Campus%2C_Cambridge%2C_Massachusetts.JPG" alt="Harvard Campus">
+    <div align="center">
+        <img style="max-width: 70vw; border-radius: 24px;"
+             src="https://upload.wikimedia.org/wikipedia/commons/8/86/Snow_and_Pforzheimer_House%2C_Harvard_Campus%2C_Cambridge%2C_Massachusetts.JPG"
+             alt="Harvard Campus">
     </div>
 
-    <div class="24th">
-        <p>Current location:</p>
-        <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1VJqv4BffZkpFTb9HeQZJKQztnTm5AFc&ehbc=2E312F" width="640" height="480"></iframe>
+    <!-- ── Live Location Widget ───────────────────────────── -->
+    <div class="location-widget">
+        <h3>📍 Current Location</h3>
+        <p class="location-status" id="location-status">Click below to share your live position</p>
+        <button class="location-btn" id="locate-btn" onclick="detectLocation()">Detect My Location</button>
+        <div class="location-map-frame" id="location-map-frame">
+            <iframe id="location-map-iframe" src="" allowfullscreen loading="lazy"></iframe>
+        </div>
     </div>
-    
+
+    <!-- ════════════════════════════════════════════════════ -->
     <script>
-        // Simple JavaScript to handle navigation
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get all navigation links
-            const navLinks = document.querySelectorAll('.nav-banner a');
-            
-            // Add click event listeners to each link
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Remove 'active' class from all links
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    
-                    // Add 'active' class to clicked link
-                    this.classList.add('active');
-                    
-                    // Get the target section ID
-                    const targetId = this.getAttribute('href').substring(1);
-                    
-                    // Hide all content sections
-                    document.querySelectorAll('#home, #sports, #music, #food, #language, #books').forEach(section => {
-                        section.style.display = 'none';
-                    });
-                    
-                    // Show the target section
-                    document.getElementById(targetId).style.display = 'block';
+    // ── Navigation ──────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function () {
+        const navLinks = document.querySelectorAll('.nav-banner a');
+        const sections = ['home', 'sports', 'music', 'food', 'language', 'books'];
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                navLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+
+                const targetId = this.getAttribute('href').substring(1);
+
+                sections.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.style.display = 'none';
                 });
+
+                const target = document.getElementById(targetId);
+                if (target) target.style.display = 'block';
             });
-            
-            // Show home section by default
-            document.getElementById('home').style.display = 'block';
         });
+
+        document.getElementById('home').style.display = 'block';
+        renderFoodCards();
+    });
+
+    // ── Live Geolocation ─────────────────────────────────────
+    function detectLocation() {
+        const status  = document.getElementById('location-status');
+        const mapWrap = document.getElementById('location-map-frame');
+        const mapIframe = document.getElementById('location-map-iframe');
+        const btn = document.getElementById('locate-btn');
+
+        if (!navigator.geolocation) {
+            status.textContent = '⚠️ Geolocation is not supported by your browser.';
+            return;
+        }
+
+        status.textContent = '🔍 Detecting location…';
+        btn.disabled = true;
+
+        navigator.geolocation.getCurrentPosition(
+            function (pos) {
+                const lat = pos.coords.latitude.toFixed(5);
+                const lng = pos.coords.longitude.toFixed(5);
+
+                // Reverse-geocode with OpenStreetMap Nominatim (no API key needed)
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        const city    = data.address.city || data.address.town || data.address.village || data.address.county || '';
+                        const country = data.address.country || '';
+                        status.innerHTML = `📍 Currently in: <strong>${city}${city && country ? ', ' : ''}${country}</strong>`;
+                    })
+                    .catch(() => {
+                        status.textContent = `📍 Lat ${lat}, Lng ${lng}`;
+                    });
+
+                // Embed Google Maps centred on user's coordinates
+                mapIframe.src = `https://maps.google.com/maps?q=${lat},${lng}&z=13&output=embed`;
+                mapWrap.style.display = 'block';
+                btn.textContent = '↻ Refresh';
+                btn.disabled = false;
+            },
+            function (err) {
+                const msgs = {
+                    1: 'Permission denied — please allow location access.',
+                    2: 'Position unavailable.',
+                    3: 'Request timed out.'
+                };
+                status.textContent = '⚠️ ' + (msgs[err.code] || 'Unknown error.');
+                btn.disabled = false;
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
+        );
+    }
+
+    // ── Food Review Cards ────────────────────────────────────
+    // ✏️  Paste your Google Keep notes into this array!
+    // Each entry: { name, location, rating (1-5), date, note, emoji }
+    const reviews = [
+        {
+            name: "Yume Wo Katare",
+            location: "Cambridge, MA",
+            rating: 5,
+            date: "Spring 2025",
+            note: "Thick, soul-warming tonkotsu broth that hits differently after a long day. The communal table energy is unmatched — shout your dreams before you eat!",
+            emoji: "🍜"
+        },
+        {
+            name: "Shabu Shabu Spring",
+            location: "Boston, MA",
+            rating: 5,
+            date: "Spring 2025",
+            note: "Reminiscent of Japan. The dashi broth was incredibly clean and the wagyu slices melted instantly. Perfect for a rainy evening.",
+            emoji: "🥩"
+        },
+        {
+            name: "Cafe Sushi",
+            location: "Cambridge, MA",
+            rating: 4,
+            date: "2024",
+            note: "Solid omakase on a student budget. Salmon belly was a highlight. Gets busy — go early!",
+            emoji: "🍣"
+        }
+        // ← Add more reviews here from your Google Keep notes
+    ];
+
+    function renderFoodCards() {
+        const container = document.getElementById('food-review-cards');
+        if (!container) return;
+        container.innerHTML = reviews.map(r => `
+            <div class="food-card">
+                <div class="food-card-emoji">${r.emoji}</div>
+                <h4>${r.name}</h4>
+                <div class="food-location">📍 ${r.location} &nbsp;·&nbsp; ${r.date}</div>
+                <div class="food-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+                <p>${r.note}</p>
+            </div>
+        `).join('');
+    }
     </script>
 </body>
 </html>
