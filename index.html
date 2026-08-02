@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Simon 马培尧</title>
+    <title>MA FLIGHTS — Flight Archive</title>
     <meta name="description" content="Simon Ma's personal website — Harvard grad, AI & startups, food lover, polyglot.">
     <link rel="icon" type="image/x-icon" href="./FJSIM_20241104092632">
     <link rel="stylesheet" href="index.css">
@@ -298,6 +298,14 @@
 
         <!-- Leaflet Map widget -->
         <div id="leaflet-food-map" style="margin-bottom: 20px;"></div>
+        <div class="filter-bar">
+           <select id="cuisine-filter"><option value="">All Cuisines</option></select>
+           <select id="region-filter"><option value="">All Regions</option></select>
+           <select id="rating-filter"><option value="">All Ratings</option></select>
+           <input type="date" id="start-date-filter"/>
+           <input type="date" id="end-date-filter"/>
+           <button class="btn" id="apply-filters-btn">Apply Filters</button>
+        </div>
 
         <!-- Google Keep Map Sync Controls -->
         <div class="sync-section">
@@ -639,6 +647,8 @@
             }
         ];
 
+let allReviewsData = [...reviews];
+
         let foodMap = null;
         let foodMarkers = [];
 
@@ -681,7 +691,8 @@
             if (!container) return;
 
             container.innerHTML = reviewsList.map(r => {
-                const imgTag = r.image ? `<img src="${r.image}" style="width: 100%; border-radius: 16px; margin-top: 12px; max-height: 180px; object-fit: cover;" />` : '';
+                const imgTag = r.image ? `<img src="${r.image}" style="width: 100%; border-radius: 16px; margin-top: 12px; max-height: 180px; object-fit: cover;" />` : '<img src="/images/placeholder.png" style="width: 100%; border-radius: 16px; margin-top: 12px; max-height: 180px; object-fit: cover; display:none;" />';
+                const imageTooltip = `<div class="tooltip">${imgTag}</div>`;
                 return `
                 <div class="food-card">
                     <div class="food-card-emoji">${r.emoji || '🍜'}</div>
@@ -689,7 +700,7 @@
                     <div class="food-location">📍 ${r.location} &nbsp;·&nbsp; ${r.date}</div>
                     <div class="food-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
                     <p>${r.note}</p>
-                    ${imgTag}
+                    ${imageTooltip}
                 </div>
             `;
             }).join('');
@@ -806,6 +817,11 @@
                     const allReviews = [...reviews, ...updated];
                     initFoodMap(allReviews);
                     renderFoodReviews(allReviews);
+                    // Center map on most recent imported review
+                    if (allReviews.length) {
+                        const recent = allReviews[allReviews.length - 1];
+                        if (foodMap) foodMap.setView([recent.lat, recent.lng], 13);
+                    }
                     alert(`Imported ${importedReviews.length} food reviews from Keep!`);
                     closeModal('keep-modal');
                 }
@@ -876,11 +892,15 @@
                         const title = items[i].getElementsByTagName('title')[0]?.textContent || '';
                         const author = items[i].getElementsByTagName('author_name')[0]?.textContent || '';
                         const rating = items[i].getElementsByTagName('user_rating')[0]?.textContent || 0;
-
-                        books.push({ title, author, rating: parseInt(rating) });
+                        const pubDate = items[i].getElementsByTagName('pubDate')[0]?.textContent || '';
+                        const coverUrl = items[i].getElementsByTagName('image_url')[0]?.textContent || '';
+                        const review = items[i].getElementsByTagName('description')[0]?.textContent || '';
+                        books.push({ title, author, rating: parseInt(rating), year: pubDate ? new Date(pubDate).getFullYear() : null, coverUrl, review });
                     }
 
                     if (books.length > 0) {
+                        // Group by year
+                        books.sort((a, b) => (b.year || 0) - (a.year || 0));
                         localStorage.setItem('goodreads_books', JSON.stringify(books));
                         renderGoodreadsBooks(books);
                         alert(`Successfully synced ${books.length} books from Goodreads!`);
@@ -937,13 +957,26 @@
             const container = document.getElementById('goodreads-section');
             if (!list || !container) return;
 
-            list.innerHTML = booksList.map(b => `
-            <li class="complete">
-                <strong>${b.title}</strong> by ${b.author}
-                ${b.rating > 0 ? ` &nbsp;·&nbsp; <span style="color:#f5c842;">${'★'.repeat(b.rating)}</span>` : ''}
-            </li>
-        `).join('');
+            // Group by year if present
+            const grouped = {};
+            booksList.forEach(b => {
+                const yr = b.year || 'Unknown';
+                if (!grouped[yr]) grouped[yr] = [];
+                grouped[yr].push(b);
+            });
 
+            let html = '';
+            Object.keys(grouped).sort((a,b)=> (b==="Unknown"?0:parseInt(b))-(a==="Unknown"?0:parseInt(a))).forEach(year => {
+                html += `<h3>${year}</h3>`;
+                html += `<ul>`;
+                grouped[year].forEach(b => {
+                    const imgTag = b.coverUrl ? `<img src="${b.coverUrl}" style="width:80px;height:auto;margin-right:10px;vertical-align:middle;"/>` : '';
+                    const tooltip = b.review ? `<div class=\"tooltip\">${b.review}</div>` : '';
+                    html += `<li class=\"complete\">${imgTag}<strong>${b.title}</strong> by ${b.author} ${b.rating>0?`&nbsp;·&nbsp;<span style=\"color:#f5c842;\">${'★'.repeat(b.rating)}</span>`:''}${tooltip}</li>`;
+                });
+                html += `</ul>`;
+            });
+            list.innerHTML = html;
             container.style.display = 'block';
         }
     </script>

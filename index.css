@@ -855,3 +855,25 @@ input[type="checkbox"].poker-input {
   margin-bottom: 5px;
 }
 
+
+/* ── Tooltip Styles ─────────────────────────────────────── */
+.food-card {
+  position: relative;
+}
+.tooltip {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  padding: 8px;
+  box-shadow: var(--shadow-soft);
+  z-index: 10;
+}
+.food-card:hover .tooltip {
+  display: block;
+}
