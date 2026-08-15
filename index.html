@@ -132,6 +132,36 @@
                 text-align: center;
             }
         }
+
+        /* ── Books accordion (added — wasn't previously styled/wired) ── */
+        .myDIV {
+            cursor: pointer;
+            user-select: none;
+            font-weight: 700;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            transition: background 0.2s ease;
+        }
+
+        .myDIV:hover {
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .myDIV::before {
+            content: "▸ ";
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
+        .myDIV.open::before {
+            transform: rotate(90deg);
+        }
+
+        .section .hide {
+            display: none;
+            padding: 10px 14px 4px;
+        }
     </style>
 </head>
 
@@ -195,13 +225,6 @@
         </div>
     </div>
 
-    <!-- ── Books ─────────────────────────────────────────── -->
-            <div class="hide">
-                <ul class="book-list" id="goodreads-book-list"></ul>
-            </div>
-        </div>
-    </div>
-
     <!-- ── Sports ─────────────────────────────────────────── -->
     <div id="sports" class="info-box" style="display: none;">
         <h2>Sports</h2>
@@ -247,6 +270,90 @@
     <div id="language" class="info-box" style="display: none;">
         <h2>Language</h2>
         <p>I have a 453 day streak on Duolingo Russian. Я работаю над улучшением.</p>
+    </div>
+
+    <!-- ── Books ─────────────────────────────────────────── -->
+    <div id="books" class="info-box" style="display: none;">
+        <h2>Books 📚</h2>
+
+        <div class="sync-section">
+            <button class="sync-btn" onclick="openModal('goodreads-modal')">📚 Sync Goodreads Shelf</button>
+        </div>
+
+        <div class="section">
+            <div class="myDIV">Books read as of 2024</div>
+            <div class="hide">
+                <p>Crying in H Mart | Michelle Zauner</p>
+                <p>Seven Ages of Death | Richard Shepard</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="myDIV">Books read as of 2025</div>
+            <div class="hide">
+                <p>Crying in H Mart | Michelle Zauner</p>
+                <p>Prozac Nation | Elizabeth Wurtzel</p>
+                <p>Seven Ages of Death | Richard Shepard</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="myDIV">Books from 2020</div>
+            <div class="hide">
+                <ul class="book-list">
+                    <li class="complete">1984 | George Orwell</li>
+                    <li class="not-started">Fahrenheit 451 | Ray Bradbury</li>
+                    <li class="in-progress">The Kite Runner | Khaled Hosseini</li>
+                    <li class="complete">The Fault in Our Stars | John Green</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="myDIV">Books from 2021</div>
+            <div class="hide">
+                <ul class="book-list">
+                    <li class="complete">Becoming | Michelle Obama</li>
+                    <li class="in-progress">This is Going to Hurt | Adam Kay</li>
+                    <li class="not-started">Range | David Epstein</li>
+                    <li class="complete">Criminal Sociology | Ferri Enrico</li>
+                    <li class="complete">A Little Life | Hanya Yanagihara</li>
+                    <li class="complete">The War on Normal People | Andrew Yang</li>
+                    <li class="complete">The Paper Menagerie | Ken Liu</li>
+                    <li class="complete">Being Mortal | Atul Gawande</li>
+                    <li class="in-progress">Your Brain on Music | Daniel Levitin</li>
+                    <li class="complete">Building a Life Worth Living | Marsha Linehan</li>
+                    <li class="complete">Never Let Me Go | Kazuo Ishiguro</li>
+                    <li class="complete">Queen's Gambit | Walter Tevis</li>
+                    <li class="complete">Know My Name | Chanel Miller</li>
+                    <li class="complete">Astrophysics for People in a Hurry | Neil deGrasse Tyson</li>
+                    <li class="complete">Einstein's Unfinished Symphony | Marcia Bartusiak</li>
+                    <li class="complete">Eleanor Oliphant is Completely Fine | Gail Honeyman</li>
+                    <li class="complete">The Martian | Andy Weir</li>
+                    <li class="complete">Loss Adjustment | Linda Collins</li>
+                    <li class="complete">Guns, Germs, and Steel | Jared Diamond</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="myDIV">Unfinished Books</div>
+            <div class="hide">
+                <ul class="book-list">
+                    <li class="in-progress">One Hundred Years of Solitude | Gabriel García Márquez</li>
+                    <li class="not-started">Hiking with Nietzsche | John Kaag</li>
+                    <li class="in-progress">The Remains of the Day | Kazuo Ishiguro</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Dynamic Goodreads Books section -->
+        <div class="section" id="goodreads-section" style="display: none;">
+            <div class="myDIV">Books from Goodreads</div>
+            <div class="hide">
+                <ul class="book-list" id="goodreads-book-list"></ul>
+            </div>
+        </div>
     </div>
 
     <!-- ── Polaroid + email (always visible) ────────────── -->
@@ -437,6 +544,17 @@
 
             document.getElementById('home').style.display = 'block';
 
+            // Books accordion — click a section header to expand/collapse it
+            document.querySelectorAll('.myDIV').forEach(header => {
+                header.addEventListener('click', function () {
+                    const content = this.nextElementSibling;
+                    if (!content) return;
+                    const isOpen = content.style.display === 'block';
+                    content.style.display = isOpen ? 'none' : 'block';
+                    this.classList.toggle('open', !isOpen);
+                });
+            });
+
             // Initialise Map & Reviews
             const savedReviews = JSON.parse(localStorage.getItem('keep_reviews') || '[]');
             const allReviews = [...reviews, ...savedReviews];
@@ -578,7 +696,7 @@
             }
         ];
 
-let allReviewsData = [...reviews];
+        let allReviewsData = [...reviews];
 
         let foodMap = null;
         let foodMarkers = [];
