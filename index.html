@@ -162,6 +162,25 @@
             display: none;
             padding: 10px 14px 4px;
         }
+
+        /* ── Embedded vocabulary explorer ─────────────────── */
+        .vocabulary-frame-wrap {
+            width: 100%;
+            margin-top: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.92);
+            border-radius: 24px;
+            background: #f3f4f6;
+            box-shadow: 0 8px 36px rgba(140, 195, 235, 0.22);
+        }
+
+        #vocabulary-frame {
+            display: block;
+            width: 100%;
+            min-height: 1050px;
+            border: 0;
+            background: #f3f4f6;
+        }
     </style>
 </head>
 
@@ -270,6 +289,11 @@
     <div id="language" class="info-box" style="display: none;">
         <h2>Language</h2>
         <p>I have a 453 day streak on Duolingo Russian. Я работаю над улучшением.</p>
+        <div class="vocabulary-frame-wrap">
+            <iframe id="vocabulary-frame" src="vocabulary/index.html"
+                title="Simon's multilingual vocabulary overlap explorer"
+                loading="lazy"></iframe>
+        </div>
     </div>
 
     <!-- ── Books ─────────────────────────────────────────── -->
@@ -432,7 +456,7 @@
             <div class="card">Surprise</div>
         </div>
         <div class="column">
-            <a href="#flights"><div class="card">Flights</div></a>
+            <a href="flight.html"><div class="card">Flights</div></a>
         </div>
     </div>
 
@@ -521,11 +545,14 @@
 
             navLinks.forEach(link => {
                 link.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href') || '';
+                    // Normal page links (such as flight.html) must navigate normally.
+                    if (!href.startsWith('#')) return;
                     e.preventDefault();
                     navLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
 
-                    const targetId = this.getAttribute('href').substring(1);
+                    const targetId = href.substring(1);
 
                     sections.forEach(id => {
                         const el = document.getElementById(id);
@@ -1028,6 +1055,19 @@
             list.innerHTML = html;
             container.style.display = 'block';
         }
+    </script>
+    <script>
+        // Keep the embedded language explorer tall enough to show its current view.
+        window.addEventListener('message', function (event) {
+            const frame = document.getElementById('vocabulary-frame');
+            if (!frame || event.source !== frame.contentWindow) return;
+            if (event.data && event.data.type === 'vocabulary-height') {
+                const height = Number(event.data.height);
+                if (Number.isFinite(height) && height >= 600 && height <= 10000) {
+                    frame.style.height = Math.ceil(height) + 'px';
+                }
+            }
+        });
     </script>
 </body>
 
