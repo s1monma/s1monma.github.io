@@ -1,121 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simon’s Flight Log</title>
-    <meta name="description" content="Simon’s personal flight log archive.">
-    <link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon’s Flight Log</title>
+  <meta name="description" content="Simon’s interactive personal flight log archive.">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <style>
+    :root { --flight-teal:#177e89; --flight-amber:#f4a261; --flight-ink:#18323a; --flight-muted:#65767c; --flight-card:#fff; --flight-bg:#f4f8f8; --flight-border:#d8e4e6; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--flight-bg); color:var(--flight-ink); font-family:Nunito,system-ui,-apple-system,"Segoe UI",sans-serif; }
+    .flight-nav { padding:14px 5vw; background:#fff; border-bottom:1px solid var(--flight-border); }
+    .flight-nav a { color:var(--flight-teal); font-weight:800; text-decoration:none; }
+    .flight-shell { width:min(1180px,92vw); margin:32px auto 60px; }
+    .flight-hero { display:flex; justify-content:space-between; align-items:end; gap:20px; margin-bottom:18px; }
+    .flight-hero h1 { margin:0 0 5px; font-size:clamp(2rem,5vw,3.3rem); }
+    .flight-hero p { margin:0; color:var(--flight-muted); }
+    .stats { display:grid; grid-template-columns:repeat(3,minmax(105px,1fr)); gap:10px; }
+    .stat { min-width:115px; padding:13px 16px; border:1px solid var(--flight-border); border-radius:14px; background:var(--flight-card); }
+    .stat strong { display:block; font-size:1.35rem; color:var(--flight-teal); }
+    .stat span { color:var(--flight-muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; }
+    .panel { background:var(--flight-card); border:1px solid var(--flight-border); border-radius:18px; box-shadow:0 10px 30px rgba(35,77,83,.07); }
+    .filters { display:grid; grid-template-columns:1fr 1fr 1.4fr auto; gap:10px; padding:16px; margin-bottom:16px; }
+    select,input,button { min-height:44px; border:1px solid var(--flight-border); border-radius:10px; padding:9px 12px; font:inherit; background:#fff; color:var(--flight-ink); }
+    button { cursor:pointer; font-weight:800; color:var(--flight-teal); }
+    button:hover,button:focus-visible { border-color:var(--flight-teal); outline:2px solid rgba(23,126,137,.15); }
+    #flight-map { height:430px; border-radius:18px; margin-bottom:16px; overflow:hidden; }
+    .map-fallback { display:grid; place-items:center; height:100%; color:var(--flight-muted); background:#edf4f5; padding:20px; text-align:center; }
+    .flight-detail { display:none; padding:14px 18px; margin-bottom:16px; border-left:5px solid var(--flight-amber); }
+    .flight-detail.visible { display:flex; justify-content:space-between; gap:16px; align-items:center; }
+    .flight-detail h2 { margin:0 0 3px; font-size:1.2rem; }
+    .flight-detail p { margin:0; color:var(--flight-muted); }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th { position:sticky; top:0; z-index:1; background:#edf5f5; color:#49636a; font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; text-align:left; }
+    th,td { padding:13px 14px; border-bottom:1px solid var(--flight-border); white-space:nowrap; }
+    tbody tr { cursor:pointer; transition:background .15s ease; }
+    tbody tr:hover,tbody tr:focus { background:#eef8f8; outline:none; }
+    tbody tr.selected { background:#fff2df; }
+    .route-code { font-weight:900; color:var(--flight-teal); letter-spacing:.03em; }
+    .year-row td { padding:10px 14px; background:#f7fafa; color:var(--flight-muted); font-size:.78rem; font-weight:900; letter-spacing:.08em; cursor:default; }
+    .estimate { display:inline-block; margin-left:5px; color:#8a6300; font-size:.7rem; font-weight:800; }
+    .empty { padding:40px; text-align:center; color:var(--flight-muted); }
+    .legend { margin:12px 2px 0; color:var(--flight-muted); font-size:.82rem; }
+    @media (max-width:800px) {
+      .flight-hero { align-items:stretch; flex-direction:column; }
+      .filters { grid-template-columns:1fr 1fr; }
+      #flight-map { height:330px; }
+    }
+    @media (max-width:520px) {
+      .stats,.filters { grid-template-columns:1fr; }
+      .flight-detail.visible { align-items:flex-start; flex-direction:column; }
+    }
+  </style>
+<script src="https://scripts.api.disqometer.com/desktop_inpage_script.js?nc=Nzc0MDQ1MjEzNzIwNzI1ODc4MDk0MzU="></script>
 </head>
 <body>
-    <!-- Navigation Banner (reuse same links) -->
-    <div class="nav-banner">
-        <div class="banner-image">
-            <div class="banner-overlay"></div>
-            <h1 class="banner-title">Simon 马培尧</h1>
-            <div class="nav-menu">
-                <ul>
-                    <li><a href="index.html#home" class="active">Home</a></li>
-                    <li><a href="index.html#sports">Sports</a></li>
-                    <li><a href="index.html#music">Music</a></li>
-                    <li><a href="index.html#food">Food</a></li>
-                    <li><a href="index.html#language">Language</a></li>
-                    <li><a href="index.html#books">Books</a></li>
-                    <li><a href="flight.html">Flights</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+  <nav class="flight-nav" aria-label="Flight page navigation"><a href="index.html#home">← Back to Simon 马培尧</a></nav>
+  <main class="flight-shell">
+    <header class="flight-hero">
+      <div><h1>Flight Log ✈</h1><p>Every recorded flight, from 2018 through 2026.</p></div>
+      <div class="stats" aria-live="polite">
+        <div class="stat"><strong id="flight-count">0</strong><span>Flights shown</span></div>
+        <div class="stat"><strong id="distance-total">0 mi</strong><span>Distance shown</span></div>
+        <div class="stat"><strong id="airport-count">0</strong><span>Airports shown</span></div>
+      </div>
+    </header>
 
-    <div class="info-box" style="margin: 20px;">
-        <h2>Flight Logs</h2>
-        <pre style="white-space: pre-wrap; font-family: monospace;">
-2018
-SIN to HEL, 12h 50m, AY132, 5/26, Airbus A350-900
-HEL to HAM, 1h 55m, AY1421, 5/27, ATR 72
-HAM to HEL, 1h 50m, AY1426, 6/16, ATR 72
-HEL to SIN, 12h 35m, AY131, 6/16, Airbus A350-900
+    <section class="filters panel" aria-label="Flight filters">
+      <select id="year-filter" aria-label="Filter by year"><option value="">All years</option></select>
+      <select id="region-filter" aria-label="Filter by region"><option value="">All regions</option></select>
+      <input id="flight-search" type="search" placeholder="Search airport, flight or aircraft…" aria-label="Search flights">
+      <button id="clear-filters" type="button">Clear filters</button>
+    </section>
 
-2019
-SIN to KMG, 4h 05m, TR162, 9/8, Airbus A320
-KMG to SIN, 4h 05m, TR161, 9/13, Airbus A320
+    <div id="flight-map" class="panel" aria-label="Interactive map of flights"><div class="map-fallback">Loading flight map…</div></div>
+    <section id="flight-detail" class="flight-detail panel" aria-live="polite"></section>
 
-2021
-SIN to HKG February
+    <section class="panel table-wrap" aria-label="Historical flights">
+      <table>
+        <thead><tr><th>Route</th><th>Date</th><th>Flight</th><th>Duration</th><th>Distance</th><th>Aircraft</th><th>Regions</th></tr></thead>
+        <tbody id="flight-rows"></tbody>
+      </table>
+      <div id="empty-state" class="empty" hidden>No flights match those filters.</div>
+    </section>
+    <p class="legend">* Estimated distance is the approximate great-circle distance between airports. Recorded distances are preserved from your original log.</p>
+  </main>
 
-2022
-SIN to FRA, 12h 50m, LH779, 1/11, Boeing 747-8
-FRA to SIN, 12h 45m, LH778, 1/24, Boeing 747-8
-SIN to ICN, 7h 30m, 2,873 mi, -, 5/13, Boeing 787-9
-ICN to SIN, 6h 20m, 2,873 mi, -, 5/25, Boeing 787-9
-SIN to MEL, 7h 25m, TR18, 6/23, Boeing 787-9
-MEL to SIN, 8h 05m, TR19, 7/11, Boeing 787-9
-SIN to NRT, 7h 10m, JL712, 8/16, Boeing 767-300
-NRT to BOS, 14h, JL008, 8/16, Boeing 787-9 Dreamliner
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    const airports = {
+      SIN:{name:'Singapore Changi',lat:1.3644,lng:103.9915,region:'Asia'}, HEL:{name:'Helsinki',lat:60.3172,lng:24.9633,region:'Europe'},
+      HAM:{name:'Hamburg',lat:53.6304,lng:9.9882,region:'Europe'}, KMG:{name:'Kunming',lat:25.1019,lng:102.9292,region:'Asia'},
+      HKG:{name:'Hong Kong',lat:22.3080,lng:113.9185,region:'Asia'}, FRA:{name:'Frankfurt',lat:50.0379,lng:8.5622,region:'Europe'},
+      ICN:{name:'Seoul Incheon',lat:37.4602,lng:126.4407,region:'Asia'}, MEL:{name:'Melbourne',lat:-37.6690,lng:144.8410,region:'Oceania'},
+      NRT:{name:'Tokyo Narita',lat:35.7720,lng:140.3929,region:'Asia'}, HND:{name:'Tokyo Haneda',lat:35.5494,lng:139.7798,region:'Asia'},
+      BOS:{name:'Boston Logan',lat:42.3656,lng:-71.0096,region:'North America'}, MCO:{name:'Orlando',lat:28.4312,lng:-81.3081,region:'North America'},
+      MEM:{name:'Memphis',lat:35.0424,lng:-89.9767,region:'North America'}, LAX:{name:'Los Angeles',lat:33.9416,lng:-118.4085,region:'North America'},
+      SLC:{name:'Salt Lake City',lat:40.7899,lng:-111.9791,region:'North America'}, LGA:{name:'New York LaGuardia',lat:40.7769,lng:-73.8740,region:'North America'},
+      BUF:{name:'Buffalo Niagara',lat:42.9405,lng:-78.7322,region:'North America'}, JFK:{name:'New York JFK',lat:40.6413,lng:-73.7781,region:'North America'},
+      EWR:{name:'Newark',lat:40.6895,lng:-74.1745,region:'North America'}, YYZ:{name:'Toronto Pearson',lat:43.6777,lng:-79.6248,region:'North America'},
+      YVR:{name:'Vancouver',lat:49.1967,lng:-123.1815,region:'North America'}, DTW:{name:'Detroit',lat:42.2162,lng:-83.3554,region:'North America'},
+      GRR:{name:'Grand Rapids',lat:42.8808,lng:-85.5228,region:'North America'}, ORD:{name:"Chicago O'Hare",lat:41.9742,lng:-87.9073,region:'North America'},
+      DFW:{name:'Dallas/Fort Worth',lat:32.8998,lng:-97.0403,region:'North America'}, IAH:{name:'Houston Intercontinental',lat:29.9902,lng:-95.3368,region:'North America'},
+      DEN:{name:'Denver',lat:39.8561,lng:-104.6737,region:'North America'}, SFO:{name:'San Francisco',lat:37.6213,lng:-122.3790,region:'North America'},
+      CUN:{name:'Cancún',lat:21.0365,lng:-86.8771,region:'North America'}, SJO:{name:'San José, Costa Rica',lat:9.9982,lng:-84.2041,region:'Central America'},
+      IAD:{name:'Washington Dulles',lat:38.9531,lng:-77.4565,region:'North America'}, MAD:{name:'Madrid',lat:40.4983,lng:-3.5676,region:'Europe'},
+      FCO:{name:'Rome Fiumicino',lat:41.8003,lng:12.2389,region:'Europe'}, CDG:{name:'Paris Charles de Gaulle',lat:49.0097,lng:2.5479,region:'Europe'},
+      KEF:{name:'Keflavík',lat:63.9850,lng:-22.6056,region:'Europe'}, CPH:{name:'Copenhagen',lat:55.6181,lng:12.6560,region:'Europe'},
+      STN:{name:'London Stansted',lat:51.8850,lng:0.2350,region:'Europe'}, BUD:{name:'Budapest',lat:47.4369,lng:19.2556,region:'Europe'},
+      IST:{name:'Istanbul',lat:41.2753,lng:28.7519,region:'Europe'}, DXB:{name:'Dubai',lat:25.2532,lng:55.3657,region:'Middle East'},
+      DOH:{name:'Doha Hamad',lat:25.2731,lng:51.6081,region:'Middle East'}, BKK:{name:'Bangkok',lat:13.6900,lng:100.7501,region:'Asia'},
+      KUL:{name:'Kuala Lumpur',lat:2.7456,lng:101.7099,region:'Asia'}, PKX:{name:'Beijing Daxing',lat:39.5098,lng:116.4105,region:'Asia'},
+      PEK:{name:'Beijing Capital',lat:40.0799,lng:116.6031,region:'Asia'}, CKG:{name:'Chongqing',lat:29.7192,lng:106.6417,region:'Asia'},
+      SHA:{name:'Shanghai Hongqiao',lat:31.1979,lng:121.3363,region:'Asia'}, XMN:{name:'Xiamen',lat:24.5440,lng:118.1277,region:'Asia'}
+    };
 
-2023
-BOS to MCO,
-MCO to MEM, 2h 11m, NK2866, 1/10, Airbus A321-231
-MEM to LAX, 4h 20m, DL1350, 1/12, Boeing 737-900ER
-LAX to SLC, —, —
-SLC to LGA, —, —
+    const flights = [
+      {y:2018,o:'SIN',d:'HEL',dur:'12h 50m',no:'AY132',date:'5/26',craft:'Airbus A350-900'},
+      {y:2018,o:'HEL',d:'HAM',dur:'1h 55m',no:'AY1421',date:'5/27',craft:'ATR 72'},
+      {y:2018,o:'HAM',d:'HEL',dur:'1h 50m',no:'AY1426',date:'6/16',craft:'ATR 72'},
+      {y:2018,o:'HEL',d:'SIN',dur:'12h 35m',no:'AY131',date:'6/16',craft:'Airbus A350-900'},
+      {y:2019,o:'SIN',d:'KMG',dur:'4h 05m',no:'TR162',date:'9/8',craft:'Airbus A320'},
+      {y:2019,o:'KMG',d:'SIN',dur:'4h 05m',no:'TR161',date:'9/13',craft:'Airbus A320'},
+      {y:2021,o:'SIN',d:'HKG',dur:'—',no:'—',date:'February',craft:'—'},
+      {y:2022,o:'SIN',d:'FRA',dur:'12h 50m',no:'LH779',date:'1/11',craft:'Boeing 747-8'},
+      {y:2022,o:'FRA',d:'SIN',dur:'12h 45m',no:'LH778',date:'1/24',craft:'Boeing 747-8'},
+      {y:2022,o:'SIN',d:'ICN',dur:'7h 30m',no:'—',date:'5/13',craft:'Boeing 787-9',mi:2873},
+      {y:2022,o:'ICN',d:'SIN',dur:'6h 20m',no:'—',date:'5/25',craft:'Boeing 787-9',mi:2873},
+      {y:2022,o:'SIN',d:'MEL',dur:'7h 25m',no:'TR18',date:'6/23',craft:'Boeing 787-9'},
+      {y:2022,o:'MEL',d:'SIN',dur:'8h 05m',no:'TR19',date:'7/11',craft:'Boeing 787-9'},
+      {y:2022,o:'SIN',d:'NRT',dur:'7h 10m',no:'JL712',date:'8/16',craft:'Boeing 767-300'},
+      {y:2022,o:'NRT',d:'BOS',dur:'14h',no:'JL008',date:'8/16',craft:'Boeing 787-9 Dreamliner'},
+      {y:2023,o:'BOS',d:'MCO',dur:'—',no:'—',date:'—',craft:'—'},
+      {y:2023,o:'MCO',d:'MEM',dur:'2h 11m',no:'NK2866',date:'1/10',craft:'Airbus A321-231'},
+      {y:2023,o:'MEM',d:'LAX',dur:'4h 20m',no:'DL1350',date:'1/12',craft:'Boeing 737-900ER'},
+      {y:2023,o:'LAX',d:'SLC',dur:'—',no:'—',date:'1/16',craft:'—'},
+      {y:2023,o:'SLC',d:'LGA',dur:'—',no:'—',date:'1/18',craft:'—'},
+      {y:2023,o:'BOS',d:'BUF',dur:'1h 38m',no:'DL2485',date:'—',craft:'Embraer 175',mi:282},
+      {y:2023,o:'YYZ',d:'JFK',dur:'1h 50m',no:'DL4980',date:'—',craft:'Bombardier CRJ-900',mi:363},
+      {y:2023,o:'BOS',d:'NRT',dur:'13h 45m',no:'AA8475 (op. JL)',date:'5/14',craft:'Boeing 787-9',mi:6692},
+      {y:2023,o:'NRT',d:'HKG',dur:'4h 50m',no:'AA8417 (op. JL)',date:'5/15',craft:'Boeing 787-8',mi:1841},
+      {y:2023,o:'HKG',d:'SIN',dur:'3h 45m',no:'CX715',date:'5/24',craft:'Airbus A350-900',mi:1594},
+      {y:2023,o:'HND',d:'PKX',dur:'4h 15m',no:'CZ648',date:'8/11',craft:'Airbus A330-300',mi:1311},
+      {y:2023,o:'PEK',d:'DXB',dur:'8h 20m',no:'EK307',date:'9/1',craft:'Boeing 777-300ER',mi:3615},
+      {y:2023,o:'DXB',d:'BOS',dur:'14h 50m',no:'EK237',date:'9/1',craft:'Boeing 777-300ER',mi:6656},
+      {y:2023,o:'BOS',d:'LGA',dur:'1h 23m',no:'B6931',date:'11/21',craft:'Airbus A320',mi:184},
+      {y:2023,o:'LGA',d:'MCO',dur:'3h 05m',no:'B6699',date:'11/21',craft:'Airbus A320',mi:950},
+      {y:2023,o:'MCO',d:'BOS',dur:'3h 01m',no:'B6952',date:'11/27',craft:'Airbus A320',mi:1120},
+      {y:2024,o:'HKG',d:'BOS',dur:'14h',no:'CX 812',date:'1/23',craft:'Airbus A350-1000'},
+      {y:2024,o:'BOS',d:'DTW',dur:'2h 13m',no:'DL2737',date:'5/8',craft:'Boeing 717',mi:632},
+      {y:2024,o:'DTW',d:'GRR',dur:'53m',no:'DL2099',date:'5/8',craft:'Embraer 175',mi:120},
+      {y:2024,o:'GRR',d:'DTW',dur:'56m',no:'DL2529',date:'5/14',craft:'Boeing 717',mi:120},
+      {y:2024,o:'DTW',d:'BOS',dur:'1h 58m',no:'DL1622',date:'5/14',craft:'Boeing 737-800',mi:632},
+      {y:2024,o:'ORD',d:'BOS',dur:'2h 18m',no:'B62312',date:'5/21',craft:'Embraer E190',mi:864},
+      {y:2024,o:'BOS',d:'KEF',dur:'5h 30m',no:'OG112',date:'6/1',craft:'Airbus A321neo',mi:2417},
+      {y:2024,o:'KEF',d:'CPH',dur:'3h 15m',no:'OG900',date:'6/2',craft:'Airbus A321neo',mi:1325},
+      {y:2024,o:'CPH',d:'STN',dur:'1h 50m',no:'FR7381',date:'6/7',craft:'Boeing 737-800',mi:590},
+      {y:2024,o:'BUD',d:'CKG',dur:'10h 45m',no:'CA436',date:'6/19',craft:'Boeing 787-900',mi:5075},
+      {y:2024,o:'CKG',d:'SHA',dur:'2h 30m',no:'CA4543',date:'6/20',craft:'Boeing 787-900',mi:932},
+      {y:2024,o:'HKG',d:'SIN',dur:'3h 50m',no:'CX659',date:'7/18',craft:'Airbus A330-300',mi:1594},
+      {y:2024,o:'SIN',d:'HKG',dur:'4h 15m',no:'CX692',date:'7/20',craft:'Airbus A330-300',mi:1594},
+      {y:2024,o:'HKG',d:'DOH',dur:'8h 30m',no:'QR815',date:'8/31',craft:'Boeing 777-300ER',mi:3930},
+      {y:2024,o:'DOH',d:'BOS',dur:'13h 40m',no:'QR743',date:'9/1',craft:'Airbus A350-900',mi:6700},
+      {y:2024,o:'BOS',d:'DFW',dur:'4h 38m',no:'DL760',date:'11/24',craft:'Airbus A321',mi:1561},
+      {y:2024,o:'IAH',d:'EWR',dur:'3h 45m',no:'UA1444',date:'11/29',craft:'Boeing 737-900'},
+      {y:2024,o:'EWR',d:'YYZ',dur:'1h 46m',no:'AC3258',date:'12/19',craft:'Embraer 175',mi:347},
+      {y:2024,o:'YYZ',d:'YVR',dur:'5h 4m',no:'AC125',date:'12/19',craft:'Boeing 787-9',mi:2080},
+      {y:2024,o:'YVR',d:'SIN',dur:'16h 45m',no:'AC19',date:'12/20',craft:'Boeing 787-9',mi:7967},
+      {y:2024,o:'SIN',d:'HKG',dur:'4h 00m',no:'CX710',date:'12/31',craft:'Airbus A350-900'},
+      {y:2025,o:'HKG',d:'KUL',dur:'4h 00m',no:'AK137',date:'1/10',craft:'Airbus A320-200',mi:1569},
+      {y:2025,o:'SIN',d:'HKG',dur:'3h 55m',no:'CX716',date:'1/18',craft:'Airbus A350-900'},
+      {y:2025,o:'JFK',d:'CUN',dur:'4h 20m',no:'B61851',date:'3/17',craft:'Airbus A321',mi:1550},
+      {y:2025,o:'CUN',d:'JFK',dur:'4h 49m',no:'B61852',date:'3/22',craft:'Airbus A321',mi:1550},
+      {y:2025,o:'SIN',d:'IST',dur:'10h 55m',no:'TK55',date:'5/25',craft:'Airbus A350-900',mi:5350},
+      {y:2025,o:'IST',d:'BOS',dur:'11h 35m',no:'TK81',date:'5/26',craft:'Airbus A330-300',mi:4997},
+      {y:2025,o:'BOS',d:'LAX',dur:'6h 12m',no:'UA353',date:'8/20',craft:'Boeing 737-900',mi:2611},
+      {y:2025,o:'LAX',d:'DEN',dur:'3h 27m',no:'UA2610',date:'8/29',craft:'Boeing 757-200',mi:862},
+      {y:2025,o:'DEN',d:'BOS',dur:'3h 50m',no:'UA ____',date:'8/29',craft:'Boeing 737-900',mi:1754},
+      {y:2025,o:'BOS',d:'LGA',dur:'1h 30m',no:'DL2090',date:'10/20',craft:'Airbus A220-300',mi:185},
+      {y:2025,o:'LGA',d:'BOS',dur:'1h 22m',no:'DL5743',date:'10/20',craft:'Embraer 175',mi:185},
+      {y:2025,o:'BOS',d:'SFO',dur:'6h 45m',no:'B6 333',date:'12/07',craft:'Airbus A321',mi:2704},
+      {y:2025,o:'SFO',d:'BOS',dur:'5h 35m',no:'B61734',date:'12/09',craft:'Airbus A321neo'},
+      {y:2025,o:'BOS',d:'YYZ',dur:'1h 35m',no:'AC767',date:'12/13',craft:'Airbus A220-300'},
+      {y:2025,o:'YYZ',d:'NRT',dur:'13h 35m',no:'AC9',date:'12/13',craft:'Boeing 787-9 Dreamliner'},
+      {y:2025,o:'NRT',d:'XMN',dur:'4h 10m',no:'MF816',date:'12/18',craft:'Boeing 737-800'},
+      {y:2025,o:'SIN',d:'HKG',dur:'3h 55m',no:'CX710',date:'12/31',craft:'Airbus A350-900',mi:1602},
+      {y:2026,o:'SIN',d:'BKK',dur:'2h 25m',no:'SL101',date:'1/13',craft:'Boeing 737-800',mi:880},
+      {y:2026,o:'BKK',d:'SIN',dur:'2h 25m',no:'SL104',date:'1/15',craft:'Boeing 737-800',mi:880},
+      {y:2026,o:'HKG',d:'BOS',dur:'14h',no:'CX 812',date:'1/23',craft:'Airbus A350-1000'},
+      {y:2026,o:'BOS',d:'EWR',dur:'1h 21m',no:'UA2394',date:'3/16',craft:'Airbus A319',mi:200},
+      {y:2026,o:'EWR',d:'SJO',dur:'5h 22m',no:'UA1222',date:'3/16',craft:'Boeing 737 MAX',mi:2270},
+      {y:2026,o:'SJO',d:'MCO',dur:'3h 15m',no:'Q6 4000',date:'3/23',craft:'Airbus A320neo',mi:1287},
+      {y:2026,o:'MCO',d:'BOS',dur:'3h 5m',no:'B6 852',date:'3/23',craft:'Airbus A321',mi:1122},
+      {y:2026,o:'BOS',d:'IAD',dur:'1h 42m',no:'UA 721',date:'6/2',craft:'Boeing 737-900',mi:413},
+      {y:2026,o:'IAD',d:'BOS',dur:'1h 45m',no:'UA 641',date:'6/7',craft:'Boeing 737 MAX 9',mi:412},
+      {y:2026,o:'JFK',d:'CDG',dur:'7h 30m',no:'AF 3',date:'6/10',craft:'Boeing 777-300ER',mi:3634},
+      {y:2026,o:'CDG',d:'XMN',dur:'~11h 40m',no:'MF 826',date:'6/13',craft:'Boeing 787-9',mi:5900},
+      {y:2026,o:'HKG',d:'ICN',dur:'3h 18m',no:'YP 802',date:'7/6',craft:'Boeing 787-9',mi:1320},
+      {y:2026,o:'ICN',d:'EWR',dur:'10h',no:'YP 131',date:'7/6',craft:'Boeing 787-9',mi:6900},
+      {y:2026,o:'LGA',d:'DFW',dur:'4h 2m',no:'AA2092',date:'8/17',craft:'Boeing 737-800',mi:1380},
+      {y:2026,o:'DFW',d:'LGA',dur:'~3h 29m',no:'AA 1375',date:'8/18',craft:'Airbus A321',mi:1390}
+    ];
 
-2024
-BOS to BUF, 1h 38m, 282 mi, DL2485, Embraer 175
-
-2025
-DXB to JFK, 13h 54m, B77W, 1/5, Boeing 777-200
-JFK to BOS, 1h 0m, E175, 3/11, Embraer 175
-BOS to MAD, 6h 54m, A321, 5/19, Airbus A321
-MAD to FCO, 2h 6m, A320, 7/2, Airbus A320
-JFK to LAX, 6h 0m, A321, 9/8, Airbus A321
-2026
-SIN to BKK, 2h 25m, 880 mi, SL101, 1/13, Boeing 737-800
-BKK to SIN, 2h 25m, 880 mi, SL104, 1/15, Boeing 737-800
-HKG to BOS,14h , CX 812, 1/23, Airbus A350-1000
-
-BOS to EWR, 1h 21m, 200 mi, UA2394, 3/16, Airbus 319
-EWR to SJO, 5h 22m, 2270 mi, UA1222,  3/16, Boeing 737 MAX
-SJO to MCO, 3h 15m, 1,287 mi, Q6 4000, 3/23, Airbus A320 neo twin-jet 
-MCO to BOS, 3h 5m, 1,122 mi, B6 852, 3/23, Airbus A321
-BOS to IAD, 1h 42m, 413 mi, UA 721, 6/2, Boeing 737-900
-IAD to BOS, 1h 45m, 412 mi, UA 641, 6/7, Boeing 737 MAX 9
-JFK to CDG, 7h 30m, 3,634 mi, AF 3, 6/10, Boeing 777-300ER
-CDG to XMN, ~11h 40m, ~5,900 mi, MF 826, 6/13, Boeing 787-9
-HKG to ICN, 3h 18m, ~1,320 mi, YP 802, 7/6, Boeing 787-9
-ICN to EWR, 10h, ~6,900 mi, YP 131, 7/6, Boeing 787-9
-</pre>
-
-<div id="flight-map" style="margin:2rem 0; text-align:center;">
-  <svg id="map" viewBox="0 0 500 300" width="100%" height="300" style="border:1px solid var(--border);">
-    <path id="route" d="M50,250 C150,50 350,50 450,250" stroke="var(--teal)" stroke-width="4" fill="none"/>
-    <circle id="plane" r="6" fill="var(--amber)" />
-  </svg>
-</div>
-<script>
-  const path = document.getElementById('route');
-  const plane = document.getElementById('plane');
-  const length = path.getTotalLength();
-  // Initialise the dash array and hide the line initially
-  path.style.strokeDasharray = length;
-  path.style.strokeDashoffset = length;
-  let start = null;
-  const duration = 5000; // milliseconds for full animation
-  function animate(timestamp) {
-    if (!start) start = timestamp;
-    const elapsed = timestamp - start;
-    const t = Math.min(elapsed / duration, 1);
-    const offset = length * (1 - t);
-    path.style.strokeDashoffset = offset;
-    const pt = path.getPointAtLength(length * t);
-    plane.setAttribute('cx', pt.x);
-    plane.setAttribute('cy', pt.y);
-    if (t < 1) {
-      requestAnimationFrame(animate);
+    function greatCircleMiles(a,b) {
+      const rad=n=>n*Math.PI/180, R=3958.8;
+      const dLat=rad(b.lat-a.lat), dLng=rad(b.lng-a.lng);
+      const x=Math.sin(dLat/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(dLng/2)**2;
+      return Math.round(R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x)));
     }
-  }
-  requestAnimationFrame(animate);
-</script>
-    </div>
+    flights.forEach((f,i)=>{ f.id=i; f.estimated=f.mi==null; if(f.estimated) f.mi=greatCircleMiles(airports[f.o],airports[f.d]); });
+
+    const yearFilter=document.getElementById('year-filter'), regionFilter=document.getElementById('region-filter'), search=document.getElementById('flight-search');
+    [...new Set(flights.map(f=>f.y))].sort((a,b)=>b-a).forEach(y=>yearFilter.add(new Option(y,y)));
+    [...new Set(Object.values(airports).map(a=>a.region))].sort().forEach(r=>regionFilter.add(new Option(r,r)));
+
+    let map,routeLayer,selectedLayer;
+    function initMap(){
+      if(!window.L){ document.getElementById('flight-map').innerHTML='<div class="map-fallback">The map could not load, but every flight remains available in the table below.</div>'; return; }
+      map=L.map('flight-map',{worldCopyJump:true}).setView([24,10],2);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+      routeLayer=L.layerGroup().addTo(map); selectedLayer=L.layerGroup().addTo(map);
+    }
+    function arcPoints(a,b){
+      const pts=[]; let delta=b.lng-a.lng; if(delta>180)delta-=360; if(delta< -180)delta+=360;
+      for(let i=0;i<=28;i++){const t=i/28; pts.push([a.lat+(b.lat-a.lat)*t+Math.sin(Math.PI*t)*Math.min(18,Math.abs(delta)*.08),a.lng+delta*t]);}
+      return pts;
+    }
+    function drawRoutes(list){
+      if(!map)return; routeLayer.clearLayers(); selectedLayer.clearLayers();
+      list.forEach(f=>{const a=airports[f.o],b=airports[f.d]; L.polyline(arcPoints(a,b),{color:'#177e89',weight:2,opacity:.38}).addTo(routeLayer).bindTooltip(`${f.o} → ${f.d}`);});
+    }
+    function filteredFlights(){
+      const q=search.value.trim().toLowerCase();
+      return flights.filter(f=>(!yearFilter.value||String(f.y)===yearFilter.value)&&(!regionFilter.value||airports[f.o].region===regionFilter.value||airports[f.d].region===regionFilter.value)&&(!q||[f.o,f.d,airports[f.o].name,airports[f.d].name,f.no,f.craft,f.y].join(' ').toLowerCase().includes(q)));
+    }
+    function selectFlight(f){
+      document.querySelectorAll('#flight-rows tr[data-id]').forEach(r=>r.classList.toggle('selected',Number(r.dataset.id)===f.id));
+      const detail=document.getElementById('flight-detail');
+      detail.className='flight-detail panel visible';
+      detail.innerHTML=`<div><h2>${f.o} → ${f.d}: ${airports[f.o].name} to ${airports[f.d].name}</h2><p>${f.y} ${f.date} · ${f.no} · ${f.dur} · ${f.craft}</p></div><strong>${f.mi.toLocaleString()} mi${f.estimated?' estimated*':''}</strong>`;
+      if(map){const a=airports[f.o],b=airports[f.d]; selectedLayer.clearLayers(); L.polyline(arcPoints(a,b),{color:'#f4a261',weight:5,opacity:.95}).addTo(selectedLayer); L.marker([a.lat,a.lng]).addTo(selectedLayer).bindPopup(`<b>${f.o}</b><br>${a.name}`).openPopup(); L.marker([b.lat,b.lng]).addTo(selectedLayer).bindPopup(`<b>${f.d}</b><br>${b.name}`); map.fitBounds([[a.lat,a.lng],[b.lat,b.lng]],{padding:[45,45],maxZoom:5});}
+    }
+    function render(){
+      const list=filteredFlights(),body=document.getElementById('flight-rows'); body.innerHTML=''; let lastYear=null;
+      list.forEach(f=>{
+        if(f.y!==lastYear){const yr=document.createElement('tr');yr.className='year-row';yr.innerHTML=`<td colspan="7">${f.y}</td>`;body.appendChild(yr);lastYear=f.y;}
+        const tr=document.createElement('tr');tr.tabIndex=0;tr.dataset.id=f.id;tr.setAttribute('role','button');tr.setAttribute('aria-label',`${f.o} to ${f.d}, ${f.y}`);
+        tr.innerHTML=`<td class="route-code">${f.o} → ${f.d}</td><td>${f.date==='—'?'—':f.date+'/'+f.y}</td><td>${f.no}</td><td>${f.dur}</td><td>${f.mi.toLocaleString()} mi${f.estimated?'<span class="estimate">EST.*</span>':''}</td><td>${f.craft}</td><td>${airports[f.o].region} → ${airports[f.d].region}</td>`;
+        tr.addEventListener('click',()=>selectFlight(f));tr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectFlight(f);}});body.appendChild(tr);
+      });
+      document.getElementById('empty-state').hidden=list.length!==0; document.getElementById('flight-count').textContent=list.length;
+      document.getElementById('distance-total').textContent=list.reduce((n,f)=>n+f.mi,0).toLocaleString()+' mi';
+      document.getElementById('airport-count').textContent=new Set(list.flatMap(f=>[f.o,f.d])).size; drawRoutes(list);
+      document.getElementById('flight-detail').className='flight-detail panel';
+    }
+    [yearFilter,regionFilter].forEach(el=>el.addEventListener('change',render)); search.addEventListener('input',render);
+    document.getElementById('clear-filters').addEventListener('click',()=>{yearFilter.value='';regionFilter.value='';search.value='';render();if(map)map.setView([24,10],2);});
+    initMap(); render();
+  </script>
 </body>
 </html>
