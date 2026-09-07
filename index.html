@@ -1,1074 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Simon’s Personal Website</title>
-    <meta name="description" content="Simon Ma's personal website — Harvard grad, AI & startups, food lover, polyglot.">
-    <link rel="icon" type="image/x-icon" href="./FJSIM_20241104092632">
-    <link rel="stylesheet" href="index.css">
-    <link
-        href='https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Nunito:wght@300;400;600;700;800;900&display=swap'
-        rel='stylesheet'>
-
-    <!-- Leaflet.js for Interactive Map in Food Section -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
-    <style>
-        /* ── Section spacing (inline overrides kept minimal) ── */
-        .section {
-            margin-bottom: 20px;
-        }
-
-        .timeline {
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-
-        .timeline-item {
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .row {
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-
-        /* ── Navigation Banner inline overrides ─────────────── */
-        .nav-banner {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            overflow: hidden;
-            z-index: 1000;
-        }
-
-        .banner-image {
-            width: 100%;
-            height: 220px;
-            background-image: url('https://assets.codepen.io/2722301/cards.jpg');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-
-        .banner-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(180, 220, 255, 0.28), rgba(140, 195, 250, 0.55));
-            backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(3px);
-        }
-
-        .nav-menu {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.28);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-top: 1px solid rgba(255, 255, 255, 0.55);
-        }
-
-        .nav-menu ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-menu li a {
-            display: block;
-            color: rgba(255, 255, 255, 0.92);
-            padding: 16px 24px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            border-radius: 30px 30px 0 0;
-            transition: all 0.3s ease;
-        }
-
-        .nav-menu li a:hover {
-            background: rgba(255, 255, 255, 0.38);
-        }
-
-        .nav-menu li a.active {
-            background: rgba(255, 255, 255, 0.48);
-            color: #5a90c0;
-        }
-
-        .banner-title {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -80%);
-            color: white;
-            font-size: 2.5rem;
-            font-weight: bold;
-            text-shadow: 0 2px 20px rgba(100, 160, 220, 0.8), 0 0 40px rgba(255, 255, 255, 0.5);
-            text-align: center;
-            font-family: 'Kaushan Script', cursive;
-        }
-
-        @media screen and (max-width: 600px) {
-            .nav-banner ul {
-                flex-direction: column;
-            }
-
-            .nav-banner li {
-                float: none;
-                text-align: center;
-            }
-        }
-
-        /* ── Books accordion (added — wasn't previously styled/wired) ── */
-        .myDIV {
-            cursor: pointer;
-            user-select: none;
-            font-weight: 700;
-            padding: 10px 14px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.06);
-            transition: background 0.2s ease;
-        }
-
-        .myDIV:hover {
-            background: rgba(255, 255, 255, 0.14);
-        }
-
-        .myDIV::before {
-            content: "▸ ";
-            display: inline-block;
-            transition: transform 0.2s ease;
-        }
-
-        .myDIV.open::before {
-            transform: rotate(90deg);
-        }
-
-        .section .hide {
-            display: none;
-            padding: 10px 14px 4px;
-        }
-
-        /* ── Embedded vocabulary explorer ─────────────────── */
-        .vocabulary-frame-wrap {
-            width: 100%;
-            margin-top: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.92);
-            border-radius: 24px;
-            background: #f3f4f6;
-            box-shadow: 0 8px 36px rgba(140, 195, 235, 0.22);
-        }
-
-        #vocabulary-frame {
-            display: block;
-            width: 100%;
-            min-height: 1050px;
-            border: 0;
-            background: #f3f4f6;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Multilingual Vocabulary Overlap Explorer — CJK &amp; Global Cognates</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
-
-    <!-- ── Poker Card Randomizer Widget ───────────────────── -->
-    <div class="cards-container">
-        <input type="checkbox" id="card_01" class="poker-input" checked>
-        <label for="card_01">
-            <div class="cardWrapper">
-                <div class="cardRandom"></div>
-            </div>
-        </label>
-
-        <input type="checkbox" id="card_02" class="poker-input" checked>
-        <label for="card_02">
-            <div class="cardWrapper">
-                <div class="cardRandom"></div>
-            </div>
-        </label>
-
-        <a href="https://uxdesign.cc/creating-randomness-with-pure-css-a990dafcd569" target="_blank"
-            class="linkElement">Read <i>"Creating randomness with pure CSS"</i></a>
+  <!-- Top utility bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon-logo">🌐</div>
+      <div class="brand-text">
+        <div class="brand-name">Polyglot Vocab</div>
+        <div class="brand-tag">LANGUAGE OVERLAP EXPLORER</div>
+      </div>
     </div>
-
-    <!-- ── Navigation Banner ─────────────────────────────── -->
-    <div class="nav-banner">
-        <div class="banner-image">
-            <div class="banner-overlay"></div>
-            <h1 class="banner-title">Simon 马培尧</h1>
-            <div class="nav-menu">
-                <ul>
-                    <li><a href="#home" class="active">Home</a></li>
-                    <li><a href="#sports">Sports</a></li>
-                    <li><a href="#music">Music</a></li>
-                    <li><a href="#food">Food</a></li>
-                    <li><a href="#language">Language</a></li>
-                    <li><a href="#books">Books</a></li>
-                    <li><a href="flight.html">Flights</a></li>
-                </ul>
-            </div>
-        </div>
+    <div class="topbar-search">
+      <span class="topbar-search-icon" aria-hidden="true">🔍</span>
+      <input id="global-search" type="text" placeholder="Search Hanzi, Kanji, Hanja, readings, or definitions..." />
     </div>
+    <div class="topbar-icons">
+      <button id="btn-ko-ja-spotlight" class="spotlight-btn">🇰🇷🇯🇵 KO-JA Spotlight</button>
+      <span class="avatar">LANG</span>
+    </div>
+  </header>
 
-    <!-- ── Home ──────────────────────────────────────────── -->
-    <div id="home">
-        <div>
-            <a href="https://www.linkedin.com/in/simon-mpy/">
-                <button class="btn btn-a">Here's my LinkedIn</button>
-            </a>
+  <!-- Section nav -->
+  <nav class="section-nav">
+    <a href="#" class="section-tab active" id="nav-all">Multilingual &amp; CJK Overlap Library</a>
+    <a href="#" class="section-tab" id="nav-ko-ja">KO-JA Notable Overlaps (韓日同形異義)</a>
+  </nav>
+
+  <main class="page">
+    <!-- Header block -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="40" height="40">
+            <circle cx="12" cy="12" r="9" fill="#E0F2FE" stroke="#0284C7" stroke-width="1.5"/>
+            <path d="M3.6 12h16.8M12 3.6a15.3 15.3 0 0 1 4 8.4 15.3 15.3 0 0 1-4 8.4 15.3 15.3 0 0 1-4-8.4z" fill="none" stroke="#0284C7" stroke-width="1.5"/>
+          </svg>
         </div>
         <div>
-            <a href="https://www.instagram.com/s1monma">
-                <button class="btn btn-lg btn-warning">Follow my Instagram 📷</button>
-            </a>
+          <div class="hero-eyebrow">Trilateral CJK &amp; Multi-Language Lexicon</div>
+          <h1 class="hero-title">Multilingual Overlapping Vocabulary Explorer</h1>
+          <p class="hero-sub">Explore overlapping vocabulary across language permutations &amp; subsets (Chinese, Japanese, Korean, French, English, Spanish, Russian, German). Compare exact cognates, semantic shifts, and KO-JA shared Hanzi.</p>
         </div>
-        <div>
-            <a href="https://www.dins.com/blog24">
-                <button class="btn btn-lg btn-warning">Europe tour 🇩🇪</button>
-            </a>
+      </div>
+      <div class="hero-search">
+        <span class="hero-search-icon" aria-hidden="true">🔍</span>
+        <input id="search-input" type="search" placeholder="Search words, Hanzi, Pinyin, Romaji, Hangul..." autocomplete="off" />
+      </div>
+    </section>
+
+    <!-- Language Combination & Permutation Selector Bar -->
+    <section class="lang-combo-bar" id="lang-combo-bar">
+      <div class="combo-title">
+        <span>🌐 Active Language Permutation / Subset:</span>
+        <span class="combo-active-name" id="combo-active-name">KO-JA (Korean &amp; Japanese)</span>
+      </div>
+      <div class="combo-controls">
+        <div class="combo-quick-presets">
+          <span class="combo-label">Presets:</span>
+          <button class="combo-chip active" data-group="ko-ja">🇰🇷🇯🇵 KO-JA (Korean &amp; Japanese)</button>
+          <button class="combo-chip" data-group="ru-de">🇩🇪🇷🇺 RU-DE (Russian &amp; German)</button>
+          <button class="combo-chip" data-group="fr-de">🇫🇷🇩🇪 FR-DE (French &amp; German)</button>
+          <button class="combo-chip" data-group="zh-ja-ko">🇨🇳🇯🇵🇰🇷 CJK Triad (ZH-JA-KO)</button>
+          <button class="combo-chip" data-group="fr-es-en">🇫🇷🇪🇸🇬🇧 Romance &amp; Germanic (FR-ES-EN)</button>
+          <button class="combo-chip" data-group="fr-ko-ja-es-ru-en-de">🌍 All 7 Languages (G120)</button>
+          <button class="combo-chip" data-group="all">All Combinations</button>
         </div>
+        <div class="combo-dropdown-wrap">
+          <label for="group-select" class="combo-label">Select Group ID (G001–G120):</label>
+          <select id="group-select" class="combo-select">
+            <option value="all">Show All Vocabulary</option>
+            <option value="ko-ja" selected>G007: KO-JA (Korean, Japanese)</option>
+            <option value="ru-de">G020: RU-DE (Russian, German)</option>
+            <option value="fr-de">G006: FR-DE (French, German)</option>
+            <option value="zh-ja-ko">CJK: ZH-JA-KO (Chinese, Japanese, Korean)</option>
+            <option value="fr-ko">G001: FR-KO (French, Korean)</option>
+            <option value="fr-ja">G002: FR-JA (French, Japanese)</option>
+            <option value="fr-es">G003: FR-ES (French, Spanish)</option>
+            <option value="fr-ru">G004: FR-RU (French, Russian)</option>
+            <option value="fr-en">G005: FR-EN (French, English)</option>
+            <option value="ko-es">G008: KO-ES (Korean, Spanish)</option>
+            <option value="ko-ru">G009: KO-RU (Korean, Russian)</option>
+            <option value="ko-en">G010: KO-EN (Korean, English)</option>
+            <option value="ko-de">G011: KO-DE (Korean, German)</option>
+            <option value="ja-es">G012: JA-ES (Japanese, Spanish)</option>
+            <option value="ja-ru">G013: JA-RU (Japanese, Russian)</option>
+            <option value="ja-en">G014: JA-EN (Japanese, English)</option>
+            <option value="ja-de">G015: JA-DE (Japanese, German)</option>
+            <option value="fr-ko-ja">G022: FR-KO-JA (French, Korean, Japanese)</option>
+            <option value="fr-es-en">G032: FR-ES-EN (French, Spanish, English)</option>
+            <option value="ko-ja-en">G039: KO-JA-EN (Korean, Japanese, English)</option>
+            <option value="fr-ko-ja-es-ru-en-de">G120: FR-KO-JA-ES-RU-EN-DE (Full 7 Languages)</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stat cards -->
+    <section class="stats" id="stats"></section>
+
+    <!-- View switcher tabs -->
+    <div class="view-header-bar">
+      <div class="view-switcher" id="view-switcher" role="tablist" aria-label="View mode">
+        <button class="view-tab active" data-view="list" role="tab" aria-selected="true" id="tab-list">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 4h10M3 8h10M3 12h6"/></svg>
+          Vocabulary List
+        </button>
+        <button class="view-tab" data-view="cluster" role="tab" aria-selected="false" id="tab-cluster">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+          Categories &amp; Overlaps
+        </button>
+        <button class="view-tab" data-view="network" role="tab" aria-selected="false" id="tab-network">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8" cy="4" r="1.8"/><circle cx="3.5" cy="12" r="1.8"/><circle cx="12.5" cy="12" r="1.8"/><path d="M6.5 5.5L4.5 10.5M9.5 5.5l1.9 4.8M4.5 12h7"/></svg>
+          Network Graph
+        </button>
+        <button class="view-tab" data-view="concentric" role="tab" aria-selected="false" id="tab-concentric">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6.2"/><circle cx="8" cy="8" r="3.8"/><circle cx="8" cy="8" r="1.6"/><circle cx="8" cy="8" r=".6" fill="currentColor" stroke="none"/></svg>
+          Concentric Rings
+        </button>
+      </div>
+
+      <div class="view-meta-note" id="view-meta-note">
+        Showing vocabulary overlaps for active language group
+      </div>
     </div>
 
-    <!-- ── Sports ─────────────────────────────────────────── -->
-    <div id="sports" class="info-box" style="display: none;">
-        <h2>Sports</h2>
-        <p>Documenting delayed onset muscle growth. PR for bench is 65kg.</p>
-    </div>
+    <!-- Filter chips (shown in list & cluster views) -->
+    <section class="filters" id="filter-bar">
+      <div class="filter-group">
+        <span class="filters-label">Filter Type:</span>
+        <button class="chip active" data-filter="all" aria-pressed="true">All Vocab</button>
+        <button class="chip" data-filter="ko_ja" aria-pressed="false">🇰🇷🇯🇵 KO-JA Overlaps</button>
+        <button class="chip" data-filter="shift" aria-pressed="false">⚠️ False Friends (Semantic Shift)</button>
+        <button class="chip" data-filter="exact" aria-pressed="false">✓ Exact Cognates</button>
+      </div>
+      <div class="cluster-filter-group" id="cluster-filter-bar">
+        <!-- populated dynamically -->
+      </div>
+    </section>
 
-    <!-- ── Music ─────────────────────────────────────────── -->
-    <div id="music" class="info-box" style="display: none;">
-        <h2>Music</h2>
-        <p>Currently practising "Demons" and "Numb" guitar chords.</p>
-        <audio controls autoplay>
-            <source src="horse.ogg" type="audio/ogg">
-            <source src="AdoReadymade.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-    </div>
+    <!-- ═══ 1. LIST VIEW ═══════════════════════════════════════════════ -->
+    <section class="body-grid" id="view-list">
+      <!-- Left rail: alphabet + term list -->
+      <aside class="left-rail">
+        <div class="alpha-jump" id="alpha-jump"></div>
+        <div class="term-list" id="term-list"></div>
+      </aside>
 
-    <!-- ── Food ──────────────────────────────────────────── -->
-    <div id="food" class="info-box" style="display: none;">
-        <h2>Food 🍜</h2>
-        <p>Yummy spring shabu shabu meal! Reminiscent of <a href="./blog0.html" target="_blank">Japan</a></p>
+      <!-- Middle: term detail -->
+      <article class="detail" id="detail"></article>
 
-        <!-- Leaflet Map widget -->
-        <div id="leaflet-food-map" style="margin-bottom: 20px;"></div>
-        <div class="filter-bar">
-           <select id="cuisine-filter"><option value="">All Cuisines</option></select>
-           <select id="region-filter"><option value="">All Regions</option></select>
-           <select id="rating-filter"><option value="">All Ratings</option></select>
-           <input type="date" id="start-date-filter"/>
-           <input type="date" id="end-date-filter"/>
-           <button class="btn" id="apply-filters-btn">Apply Filters</button>
+      <!-- Right: cross-links + cluster info -->
+      <aside class="right-rail" id="right-rail"></aside>
+    </section>
+
+    <!-- ═══ 2. CATEGORIES / OVERLAPS VIEW ══════════════════════════════ -->
+    <section class="cluster-view" id="view-cluster" hidden>
+      <div class="cluster-intro-card">
+        <div class="cluster-intro-text">
+          <h3>Etymological Categories &amp; Linguistic Overlaps</h3>
+          <p>Explore vocabulary grouped by language relationships: CJK False Friends, Exact CJK Hanzi Cognates, KO-JA Modern Overlaps, and Global Loanwords.</p>
         </div>
+      </div>
 
-        <!-- Google Keep Map Sync Controls -->
-        <div class="sync-section">
-            <button class="sync-btn" onclick="openModal('keep-modal')">💡 Sync Google Keep Map</button>
+      <!-- Cluster Grid of Cards -->
+      <div class="cluster-cards-grid" id="cluster-cards-grid"></div>
+    </section>
+
+    <!-- ═══ 3. NETWORK GRAPH VIEW ═════════════════════════════════════ -->
+    <section class="map-view" id="view-network" hidden>
+      <div class="map-canvas-wrap">
+        <canvas id="net-canvas"></canvas>
+        <div class="map-controls">
+          <button id="net-zoom-in" title="Zoom in">＋</button>
+          <button id="net-zoom-out" title="Zoom out">－</button>
+          <button id="net-fit" title="Fit all">⊡</button>
         </div>
-
-        <div class="food-reviews" id="food-review-cards"></div>
-    </div>
-
-    <!-- ── Language ───────────────────────────────────────── -->
-    <div id="language" class="info-box" style="display: none;">
-        <h2>Language</h2>
-        <p>I have a 453 day streak on Duolingo Russian. Я работаю над улучшением.</p>
-        <div class="vocabulary-frame-wrap">
-            <iframe id="vocabulary-frame" src="vocabulary/index.html"
-                title="Simon's multilingual vocabulary overlap explorer"
-                loading="lazy"></iframe>
+        <div class="map-legend" id="net-legend">
+          <div class="legend-header">Network Legend</div>
+          <div id="net-cluster-legend-items"></div>
+          <div class="legend-divider"></div>
+          <div class="legend-row"><span class="leg-dot leg-sel"></span> Selected term</div>
+          <div class="legend-row"><span class="leg-dot leg-linked"></span> Cognate / Related link</div>
+          <div class="legend-row"><span class="leg-line leg-edge"></span> Overlap link</div>
         </div>
-    </div>
+      </div>
+      <aside class="map-detail" id="net-detail">
+        <div class="map-detail-placeholder">Click any word node in the network to inspect its multi-language definitions, readings, and overlaps.</div>
+      </aside>
+    </section>
 
-    <!-- ── Books ─────────────────────────────────────────── -->
-    <div id="books" class="info-box" style="display: none;">
-        <h2>Books 📚</h2>
-
-        <div class="sync-section">
-            <button class="sync-btn" onclick="openModal('goodreads-modal')">📚 Sync Goodreads Shelf</button>
+    <!-- ═══ 4. CONCENTRIC RING VIEW ═══════════════════════════════════ -->
+    <section class="map-view" id="view-concentric" hidden>
+      <div class="map-canvas-wrap">
+        <canvas id="conc-canvas"></canvas>
+        <div class="map-controls">
+          <button id="conc-zoom-in" title="Zoom in">＋</button>
+          <button id="conc-zoom-out" title="Zoom out">－</button>
+          <button id="conc-fit" title="Fit all">⊡</button>
         </div>
-
-        <div class="section">
-            <div class="myDIV">Books read as of 2024</div>
-            <div class="hide">
-                <p>Crying in H Mart | Michelle Zauner</p>
-                <p>Seven Ages of Death | Richard Shepard</p>
-            </div>
+        <div class="conc-legend">
+          <div class="legend-header">Overlap Hierarchy Rings</div>
+          <div class="conc-ring-row"><span class="ring-badge r0">●</span> Universal Overlap (All Selected Languages)</div>
+          <div class="conc-ring-row"><span class="ring-badge r1">●</span> Exact Cognates (Shared Root / Exact Match)</div>
+          <div class="conc-ring-row"><span class="ring-badge r2">●</span> False Friends / Semantic Shift (KO-JA / CJK)</div>
+          <div class="conc-ring-row"><span class="ring-badge r3">●</span> Language-Specific Nuance / Partial Overlap</div>
         </div>
-
-        <div class="section">
-            <div class="myDIV">Books read as of 2025</div>
-            <div class="hide">
-                <p>Crying in H Mart | Michelle Zauner</p>
-                <p>Prozac Nation | Elizabeth Wurtzel</p>
-                <p>Seven Ages of Death | Richard Shepard</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="myDIV">Books from 2020</div>
-            <div class="hide">
-                <ul class="book-list">
-                    <li class="complete">1984 | George Orwell</li>
-                    <li class="not-started">Fahrenheit 451 | Ray Bradbury</li>
-                    <li class="in-progress">The Kite Runner | Khaled Hosseini</li>
-                    <li class="complete">The Fault in Our Stars | John Green</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="myDIV">Books from 2021</div>
-            <div class="hide">
-                <ul class="book-list">
-                    <li class="complete">Becoming | Michelle Obama</li>
-                    <li class="in-progress">This is Going to Hurt | Adam Kay</li>
-                    <li class="not-started">Range | David Epstein</li>
-                    <li class="complete">Criminal Sociology | Ferri Enrico</li>
-                    <li class="complete">A Little Life | Hanya Yanagihara</li>
-                    <li class="complete">The War on Normal People | Andrew Yang</li>
-                    <li class="complete">The Paper Menagerie | Ken Liu</li>
-                    <li class="complete">Being Mortal | Atul Gawande</li>
-                    <li class="in-progress">Your Brain on Music | Daniel Levitin</li>
-                    <li class="complete">Building a Life Worth Living | Marsha Linehan</li>
-                    <li class="complete">Never Let Me Go | Kazuo Ishiguro</li>
-                    <li class="complete">Queen's Gambit | Walter Tevis</li>
-                    <li class="complete">Know My Name | Chanel Miller</li>
-                    <li class="complete">Astrophysics for People in a Hurry | Neil deGrasse Tyson</li>
-                    <li class="complete">Einstein's Unfinished Symphony | Marcia Bartusiak</li>
-                    <li class="complete">Eleanor Oliphant is Completely Fine | Gail Honeyman</li>
-                    <li class="complete">The Martian | Andy Weir</li>
-                    <li class="complete">Loss Adjustment | Linda Collins</li>
-                    <li class="complete">Guns, Germs, and Steel | Jared Diamond</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="section">
-            <div class="myDIV">Unfinished Books</div>
-            <div class="hide">
-                <ul class="book-list">
-                    <li class="in-progress">One Hundred Years of Solitude | Gabriel García Márquez</li>
-                    <li class="not-started">Hiking with Nietzsche | John Kaag</li>
-                    <li class="in-progress">The Remains of the Day | Kazuo Ishiguro</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Dynamic Goodreads Books section -->
-        <div class="section" id="goodreads-section" style="display: none;">
-            <div class="myDIV">Books from Goodreads</div>
-            <div class="hide">
-                <ul class="book-list" id="goodreads-book-list"></ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- ── Polaroid + email (always visible) ────────────── -->
-    <div class="polaroid">
-        <p>Simon's current read! Updated 03/05/2025</p>
-        <img src="RUSSIABK1.jpeg" alt="Simon's current read">
-    </div>
-
-    <h1>If you'd like to chat or ask about anything, feel free to email simon_smile2011@yahoo.com.sg! (๑‾ ꇴ ‾๑)</h1>
-
-    <hr />
-
-    <!-- ── Timeline ──────────────────────────────────────── -->
-    <div class="timeline">
-        <div class="timeline-item">
-            <h3>2022</h3>
-            <p>Started my undergraduate journey at Harvard.</p>
-        </div>
-        <div class="timeline-item">
-            <h3>2023</h3>
-            <p>Started my romantic relationship with FJ!</p>
-        </div>
-        <div class="timeline-item">
-            <h3>2024</h3>
-            <p>First pet Mili.</p>
-        </div>
-        <div class="timeline-item">
-            <h3>2025</h3>
-            <p>Did AI and got a start-up PM offer.</p>
-        </div>
-        <div class="timeline-item">
-            <h3>2026</h3>
-            <p>Graduated, started work at Keystone.</p>
-        </div>
-    </div>
-
-    <hr />
-
-    <!-- ── Blog card rows ────────────────────────────────── -->
-    <div class="row">
-        <div class="column">
-            <a href="./blog1.html">
-                <div class="card">Simon's 1st BLOG</div>
-            </a>
-        </div>
-        <div class="column">
-            <a href="./blog3.html">
-                <div class="card">Thoughts</div>
-            </a>
-        </div>
-        <div class="column">
-            <a href="./blog4.html">
-                <div class="card">Food Name Edition</div>
-            </a>
-        </div>
-        <div class="column">
-            <div class="card">Work in progress</div>
-        </div>
-    </div>
-
-    <hr />
-
-    <div class="row">
-        <div class="column">
-            <a href="./blog2.html">
-                <div class="card">Simon's SECOND BLOG</div>
-            </a>
-        </div>
-        <div class="column">
-            <div class="card">Reflections</div>
-        </div>
-        <div class="column">
-            <div class="card">Essay</div>
-        </div>
-        <div class="column">
-            <div class="card">Surprise</div>
-        </div>
-        <div class="column">
-            <a href="flight.html"><div class="card">Flights</div></a>
-        </div>
-    </div>
-
-    <p class="padding">Underperforming once won't rob the past of its meaning; overperforming once won't rid the future
-        of its volatility.</p>
-
-    <form>
-        <input type="text" placeholder="Enter text">
-        <input type="submit" value="Submit">
-    </form>
-
-    <div align="center">
-        <img style="max-width: 70vw; border-radius: 24px;"
-            src="https://upload.wikimedia.org/wikipedia/commons/8/86/Snow_and_Pforzheimer_House%2C_Harvard_Campus%2C_Cambridge%2C_Massachusetts.JPG"
-            alt="Harvard Campus">
-    </div>
-
-    <!-- ── Live Location Widget ───────────────────────────── -->
-    <div class="location-widget">
-        <h3>📍 Current Location</h3>
-        <p class="location-status" id="location-status">Click below to share your live position</p>
-        <button class="location-btn" id="locate-btn" onclick="detectLocation()">Detect My Location</button>
-        <div class="location-map-frame" id="location-map-frame">
-            <iframe id="location-map-iframe" src="" allowfullscreen loading="lazy"></iframe>
-        </div>
-    </div>
-
-    <!-- ── Google Keep Sync Modal ────────────────────────── -->
-    <div class="modal-overlay" id="keep-modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('keep-modal')">&times;</button>
-            <h3>💡 Sync Google Keep Food Reviews</h3>
-            <p>Upload your Google Keep notes (Takeout JSON files + pics) to map them instantly!</p>
-
-            <div class="drag-drop-zone" id="keep-drag-zone" onclick="document.getElementById('keep-files').click()">
-                Drag & Drop Keep JSON & Image files here<br>or click to select files
-                <input type="file" id="keep-files" multiple accept=".json,image/*" style="display: none;"
-                    onchange="handleKeepFiles(this.files)">
-            </div>
-
-            <div style="text-align: center; margin: 15px 0; color: #b8d8ee;">— OR —</div>
-
-            <div class="sync-input-group">
-                <label for="keep-paste-text">Paste Google Keep Note Text:</label>
-                <textarea id="keep-paste-text" class="textarea-sync"
-                    placeholder="Format:&#10;Restaurant Name&#10;City, State&#10;5 stars&#10;Review details..."></textarea>
-                <button class="btn" onclick="syncKeepPastedText()" style="min-width: 100%; margin-top: 5px;">Import Note
-                    Text</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ── Goodreads Sync Modal ──────────────────────────── -->
-    <div class="modal-overlay" id="goodreads-modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('goodreads-modal')">&times;</button>
-            <h3>📚 Sync Goodreads Shelf</h3>
-            <p>Import your book list directly using your Goodreads RSS Feed URL or CSV export.</p>
-
-            <div class="sync-input-group">
-                <label for="goodreads-rss-url">Goodreads RSS Feed URL:</label>
-                <input type="text" id="goodreads-rss-url"
-                    placeholder="https://www.goodreads.com/review/list_rss/USER_ID?shelf=read"
-                    style="margin-bottom: 10px;">
-                <button class="btn" onclick="syncGoodreadsRSS()" style="min-width: 100%; margin-top: 5px;">Fetch from
-                    RSS</button>
-            </div>
-
-            <div style="text-align: center; margin: 15px 0; color: #b8d8ee;">— OR —</div>
-
-            <div class="drag-drop-zone" id="goodreads-drag-zone"
-                onclick="document.getElementById('goodreads-csv-file').click()">
-                Drag & Drop Goodreads Export CSV here<br>or click to select file
-                <input type="file" id="goodreads-csv-file" accept=".csv" style="display: none;"
-                    onchange="handleGoodreadsCSV(this.files)">
-            </div>
-        </div>
-    </div>
-
-    <!-- ════════════════════════════════════════════════════ -->
-    <script>
-        // ── Navigation ──────────────────────────────────────────
-        document.addEventListener('DOMContentLoaded', function () {
-            const navLinks = document.querySelectorAll('.nav-banner a');
-            const sections = ['home', 'sports', 'music', 'food', 'language', 'books', 'flights'];
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', function (e) {
-                    const href = this.getAttribute('href') || '';
-                    // Normal page links (such as flight.html) must navigate normally.
-                    if (!href.startsWith('#')) return;
-                    e.preventDefault();
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-
-                    const targetId = href.substring(1);
-
-                    sections.forEach(id => {
-                        const el = document.getElementById(id);
-                        if (el) el.style.display = 'none';
-                    });
-
-                    const target = document.getElementById(targetId);
-                    if (target) target.style.display = 'block';
-
-                    // Leaflet layout recalculation when food section becomes visible
-                    if (targetId === 'food' && foodMap) {
-                        setTimeout(() => foodMap.invalidateSize(), 100);
-                    }
-                });
-            });
-
-            document.getElementById('home').style.display = 'block';
-
-            // Books accordion — click a section header to expand/collapse it
-            document.querySelectorAll('.myDIV').forEach(header => {
-                header.addEventListener('click', function () {
-                    const content = this.nextElementSibling;
-                    if (!content) return;
-                    const isOpen = content.style.display === 'block';
-                    content.style.display = isOpen ? 'none' : 'block';
-                    this.classList.toggle('open', !isOpen);
-                });
-            });
-
-            // Initialise Map & Reviews
-            const savedReviews = JSON.parse(localStorage.getItem('keep_reviews') || '[]');
-            const allReviews = [...reviews, ...savedReviews];
-            initFoodMap(allReviews);
-            renderFoodReviews(allReviews);
-
-            // Initialise Goodreads Books
-            const savedBooks = JSON.parse(localStorage.getItem('goodreads_books') || '[]');
-            if (savedBooks.length > 0) {
-                renderGoodreadsBooks(savedBooks);
-            }
-        });
-
-        // ── Modals ──────────────────────────────────────────────
-        function openModal(id) {
-            const modal = document.getElementById(id);
-            if (modal) modal.classList.add('active');
-        }
-
-        // Drag-over styling
-        document.querySelectorAll('.drag-drop-zone').forEach(zone => {
-            zone.addEventListener('dragover', e => {
-                e.preventDefault();
-                zone.classList.add('dragover');
-            });
-            zone.addEventListener('dragleave', () => {
-                zone.classList.remove('dragover');
-            });
-            zone.addEventListener('drop', e => {
-                e.preventDefault();
-                zone.classList.remove('dragover');
-            });
-        });
-
-        // Add listener specifically to Keep drop zone
-        document.getElementById('keep-drag-zone').addEventListener('drop', e => {
-            if (e.dataTransfer.files) {
-                handleKeepFiles(e.dataTransfer.files);
-            }
-        });
-
-        // Add listener specifically to Goodreads drop zone
-        document.getElementById('goodreads-drag-zone').addEventListener('drop', e => {
-            if (e.dataTransfer.files) {
-                handleGoodreadsCSV(e.dataTransfer.files);
-            }
-        });
-
-        function closeModal(id) {
-            const modal = document.getElementById(id);
-            if (modal) modal.classList.remove('active');
-        }
-
-        // ── Live Geolocation ─────────────────────────────────────
-        function detectLocation() {
-            const status = document.getElementById('location-status');
-            const mapWrap = document.getElementById('location-map-frame');
-            const mapIframe = document.getElementById('location-map-iframe');
-            const btn = document.getElementById('locate-btn');
-
-            if (!navigator.geolocation) {
-                status.textContent = '⚠️ Geolocation is not supported by your browser.';
-                return;
-            }
-
-            status.textContent = '🔍 Detecting location…';
-            btn.disabled = true;
-
-            navigator.geolocation.getCurrentPosition(
-                function (pos) {
-                    const lat = pos.coords.latitude.toFixed(5);
-                    const lng = pos.coords.longitude.toFixed(5);
-
-                    // Reverse-geocode with OpenStreetMap Nominatim (no API key needed)
-                    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
-                        .then(r => r.json())
-                        .then(data => {
-                            const city = data.address.city || data.address.town || data.address.village || data.address.county || '';
-                            const country = data.address.country || '';
-                            status.innerHTML = `📍 Currently in: <strong>${city}${city && country ? ', ' : ''}${country}</strong>`;
-                        })
-                        .catch(() => {
-                            status.textContent = `📍 Lat ${lat}, Lng ${lng}`;
-                        });
-
-                    // Embed Google Maps centred on user's coordinates
-                    mapIframe.src = `https://maps.google.com/maps?q=${lat},${lng}&z=13&output=embed`;
-                    mapWrap.style.display = 'block';
-                    btn.textContent = '↻ Refresh';
-                    btn.disabled = false;
-                },
-                function (err) {
-                    const msgs = {
-                        1: 'Permission denied — please allow location access.',
-                        2: 'Position unavailable.',
-                        3: 'Request timed out.'
-                    };
-                    status.textContent = '⚠️ ' + (msgs[err.code] || 'Unknown error.');
-                    btn.disabled = false;
-                },
-                { enableHighAccuracy: true, timeout: 10000 }
-            );
-        }
-
-        // ── Food Leaflet Map & Card Renderers ────────────────────
-        const reviews = [
-            {
-                name: "Yume Wo Katare",
-                location: "Cambridge, MA",
-                rating: 5,
-                date: "Spring 2025",
-                note: "Hand-made, soy sauce-based, soul-warming jiro-style ramen. Speak your dream after you eat! Jake is a fun guy he always gives me a mountain of veggies. I miss his yuzu shio ramen the most.",
-                emoji: "🍜",
-                lat: 42.3875,
-                lng: -71.1194,
-                image: ""
-            },
-            {
-                name: "Spring Shabu Shabu",
-                location: "Boston, MA",
-                rating: 5,
-                date: "Spring 2025",
-                note: "Reminiscent of Japan. The dashi broth was good, veggie selection excellent, meat is extra. Matcha ice-cream.",
-                emoji: "🥩",
-                lat: 42.3486,
-                lng: -71.0801,
-                image: ""
-            },
-            {
-                name: "One Ramen and Sushi",
-                location: "Cambridge, MA",
-                rating: 3,
-                date: "2024",
-                note: "Solid unagi don on a student budget. Ramen is mediocre but passable.",
-                emoji: "🍣",
-                lat: 42.3664,
-                lng: -71.1147,
-                image: ""
-            }
-        ];
-
-        let allReviewsData = [...reviews];
-
-        let foodMap = null;
-        let foodMarkers = [];
-
-        function initFoodMap(reviewsList) {
-            const mapDiv = document.getElementById('leaflet-food-map');
-            if (!mapDiv) return;
-
-            if (foodMap) {
-                foodMap.remove();
-                foodMarkers = [];
-            }
-
-            foodMap = L.map('leaflet-food-map').setView([42.3601, -71.0589], 12);
-
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-            maxZoom: 20
-        }).addTo(foodMap);
-
-            reviewsList.forEach(r => {
-                if (r.lat && r.lng) {
-                    const imgTag = r.image ? `<img src="${r.image}" style="width: 100%; max-height: 120px; object-fit: cover; border-radius: 12px; margin-top: 8px;" />` : '';
-                    const popupContent = `
-                    <div style="font-family: 'Nunito', sans-serif; max-width: 200px;">
-                        <h4 style="margin: 0 0 3px; color: #4a7aa0; font-weight: 800;">${r.name}</h4>
-                        <div style="font-size: 0.72rem; color: #90b8d0; margin-bottom: 5px;">📍 ${r.location}</div>
-                        <div style="color: #f5c842; font-size: 0.85rem; margin-bottom: 5px;">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
-                        <p style="margin: 0; font-size: 0.8rem; line-height: 1.4; color: #5a8fb8;">${r.note}</p>
-                        ${imgTag}
-                    </div>
-                `;
-                    const marker = L.marker([r.lat, r.lng]).addTo(foodMap).bindPopup(popupContent);
-                    foodMarkers.push(marker);
-                }
-            });
-        }
-
-        function renderFoodReviews(reviewsList) {
-            const container = document.getElementById('food-review-cards');
-            if (!container) return;
-
-            container.innerHTML = reviewsList.map(r => {
-                const imgTag = r.image ? `<img src="${r.image}" style="width: 100%; border-radius: 16px; margin-top: 12px; max-height: 180px; object-fit: cover;" />` : '<img src="/images/placeholder.png" style="width: 100%; border-radius: 16px; margin-top: 12px; max-height: 180px; object-fit: cover; display:none;" />';
-                const imageTooltip = `<div class="tooltip">${imgTag}</div>`;
-                return `
-                <div class="food-card">
-                    <div class="food-card-emoji">${r.emoji || '🍜'}</div>
-                    <h4>${r.name}</h4>
-                    <div class="food-location">📍 ${r.location} &nbsp;·&nbsp; ${r.date}</div>
-                    <div class="food-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
-                    <p>${r.note}</p>
-                    ${imageTooltip}
-                </div>
-            `;
-            }).join('');
-        }
-
-        // ── Keep File Import Processing ─────────────────────────
-        let uploadedImages = {};
-        function handleKeepFiles(files) {
-            const jsonFiles = [];
-            const promises = [];
-
-            for (let file of files) {
-                if (file.type.startsWith('image/')) {
-                    promises.push(new Promise(resolve => {
-                        const reader = new FileReader();
-                        reader.onload = function (e) {
-                            uploadedImages[file.name] = e.target.result;
-                            resolve();
-                        };
-                        reader.readAsDataURL(file);
-                    }));
-                } else if (file.name.endsWith('.json')) {
-                    jsonFiles.push(file);
-                }
-            }
-
-            Promise.all(promises).then(() => {
-                const parsePromises = jsonFiles.map(file => {
-                    return new Promise(resolve => {
-                        const reader = new FileReader();
-                        reader.onload = function (e) {
-                            try {
-                                const note = JSON.parse(e.target.result);
-                                resolve(note);
-                            } catch (err) {
-                                resolve(null);
-                            }
-                        };
-                        reader.readAsText(file);
-                    });
-                });
-
-                Promise.all(parsePromises).then(notes => {
-                    const validNotes = notes.filter(n => n && (n.title || n.textContent));
-                    processKeepNotes(validNotes);
-                });
-            });
-        }
-
-        function processKeepNotes(notes) {
-            let importedReviews = [];
-            const geocodePromises = [];
-
-            notes.forEach(note => {
-                const text = note.textContent || '';
-                const title = note.title || '';
-
-                let rating = 5;
-                const ratingMatch = text.match(/([1-5])\s*stars?/i) || text.match(/rating:\s*([1-5])/i);
-                if (ratingMatch) rating = parseInt(ratingMatch[1]);
-
-                const lines = text.split('\n').map(l => l.trim()).filter(l => l);
-                const name = title || lines[0] || 'Unknown Place';
-                const location = lines[1] || 'Boston, MA';
-                const reviewText = lines.slice(2).join('\n') || text;
-
-                let image = '';
-                if (note.attachments && note.attachments.length > 0) {
-                    const attName = note.attachments[0].filePath;
-                    if (uploadedImages[attName]) {
-                        image = uploadedImages[attName];
-                    }
-                }
-
-                const geoUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location + ' ' + name)}`;
-                geocodePromises.push(
-                    fetch(geoUrl)
-                        .then(r => r.json())
-                        .then(data => {
-                            let lat = 42.3601, lng = -71.0589;
-                            if (data && data.length > 0) {
-                                lat = parseFloat(data[0].lat);
-                                lng = parseFloat(data[0].lon);
-                            }
-                            importedReviews.push({
-                                name,
-                                location,
-                                rating,
-                                date: note.userCreatedTimestampUsec ? new Date(note.userCreatedTimestampUsec / 1000).toLocaleDateString() : 'Keep Import',
-                                note: reviewText,
-                                emoji: '🍜',
-                                lat,
-                                lng,
-                                image
-                            });
-                        })
-                        .catch(() => {
-                            importedReviews.push({
-                                name, location, rating,
-                                date: 'Keep Import',
-                                note: reviewText, emoji: '🍜',
-                                lat: 42.3601, lng: -71.0589,
-                                image
-                            });
-                        })
-                );
-            });
-
-            Promise.all(geocodePromises).then(() => {
-                if (importedReviews.length > 0) {
-                    const existing = JSON.parse(localStorage.getItem('keep_reviews') || '[]');
-                    const updated = [...existing, ...importedReviews];
-                    localStorage.setItem('keep_reviews', JSON.stringify(updated));
-                    const allReviews = [...reviews, ...updated];
-                    initFoodMap(allReviews);
-                    renderFoodReviews(allReviews);
-                    // Center map on most recent imported review
-                    if (allReviews.length) {
-                        const recent = allReviews[allReviews.length - 1];
-                        if (foodMap) foodMap.setView([recent.lat, recent.lng], 13);
-                    }
-                    alert(`Imported ${importedReviews.length} food reviews from Keep!`);
-                    closeModal('keep-modal');
-                }
-            });
-        }
-
-        function syncKeepPastedText() {
-            const text = document.getElementById('keep-paste-text').value.trim();
-            if (!text) return alert('Please paste some note text.');
-
-            const lines = text.split('\n').map(l => l.trim()).filter(l => l);
-            const name = lines[0] || 'Food Place';
-            const location = lines[1] || 'Boston, MA';
-
-            let rating = 5;
-            const ratingMatch = text.match(/([1-5])\s*stars?/i) || text.match(/rating:\s*([1-5])/i);
-            if (ratingMatch) rating = parseInt(ratingMatch[1]);
-
-            const reviewText = lines.slice(2).join('\n') || text;
-
-            const geoUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location + ' ' + name)}`;
-            fetch(geoUrl)
-                .then(r => r.json())
-                .then(data => {
-                    let lat = 42.3601, lng = -71.0589;
-                    if (data && data.length > 0) {
-                        lat = parseFloat(data[0].lat);
-                        lng = parseFloat(data[0].lon);
-                    }
-                    const newReview = {
-                        name, location, rating,
-                        date: new Date().toLocaleDateString(),
-                        note: reviewText, emoji: '🍜',
-                        lat, lng, image: ""
-                    };
-
-                    const existing = JSON.parse(localStorage.getItem('keep_reviews') || '[]');
-                    const updated = [...existing, newReview];
-                    localStorage.setItem('keep_reviews', JSON.stringify(updated));
-                    const allReviews = [...reviews, ...updated];
-                    initFoodMap(allReviews);
-                    renderFoodReviews(allReviews);
-                    alert('Successfully imported food review note!');
-                    document.getElementById('keep-paste-text').value = '';
-                    closeModal('keep-modal');
-                })
-                .catch(() => {
-                    alert('Geocoding failed, but note imported at default coordinates.');
-                });
-        }
-
-        // ── Goodreads CSV & RSS Syncers ──────────────────────────
-        function syncGoodreadsRSS() {
-            const url = document.getElementById('goodreads-rss-url').value.trim();
-            if (!url) return alert('Please enter a Goodreads RSS Feed URL');
-
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-
-            fetch(proxyUrl)
-                .then(r => r.json())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xmlDoc = parser.parseFromString(data.contents, "text/xml");
-                    const items = xmlDoc.getElementsByTagName('item');
-
-                    let books = [];
-                    for (let i = 0; i < items.length; i++) {
-                        const title = items[i].getElementsByTagName('title')[0]?.textContent || '';
-                        const author = items[i].getElementsByTagName('author_name')[0]?.textContent || '';
-                        const rating = items[i].getElementsByTagName('user_rating')[0]?.textContent || 0;
-                        const pubDate = items[i].getElementsByTagName('pubDate')[0]?.textContent || '';
-                        const coverUrl = items[i].getElementsByTagName('image_url')[0]?.textContent || '';
-                        const review = items[i].getElementsByTagName('description')[0]?.textContent || '';
-                        books.push({ title, author, rating: parseInt(rating), year: pubDate ? new Date(pubDate).getFullYear() : null, coverUrl, review });
-                    }
-
-                    if (books.length > 0) {
-                        // Group by year
-                        books.sort((a, b) => (b.year || 0) - (a.year || 0));
-                        localStorage.setItem('goodreads_books', JSON.stringify(books));
-                        renderGoodreadsBooks(books);
-                        alert(`Successfully synced ${books.length} books from Goodreads!`);
-                        closeModal('goodreads-modal');
-                    } else {
-                        alert('No books found. Please double-check your RSS URL.');
-                    }
-                })
-                .catch(() => {
-                    alert('CORS fetch failed. Try exporting and uploading a Goodreads CSV instead.');
-                });
-        }
-
-        function handleGoodreadsCSV(files) {
-            if (!files.length) return;
-            const file = files[0];
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const text = e.target.result;
-                const lines = text.split('\n');
-                if (lines.length < 2) return alert('Invalid Goodreads CSV file.');
-
-                const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
-                const titleIdx = headers.indexOf('Title');
-                const authorIdx = headers.indexOf('Author');
-                const ratingIdx = headers.indexOf('My Rating');
-
-                let books = [];
-                for (let i = 1; i < lines.length; i++) {
-                    if (!lines[i]) continue;
-                    const cols = lines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
-                    if (cols.length > 0) {
-                        const title = (cols[titleIdx] || '').replace(/"/g, '').trim();
-                        const author = (cols[authorIdx] || '').replace(/"/g, '').trim();
-                        const rating = parseInt((cols[ratingIdx] || '0').replace(/"/g, '')) || 0;
-                        if (title) {
-                            books.push({ title, author, rating });
-                        }
-                    }
-                }
-
-                if (books.length > 0) {
-                    localStorage.setItem('goodreads_books', JSON.stringify(books));
-                    renderGoodreadsBooks(books);
-                    alert(`Successfully imported ${books.length} books from Goodreads CSV!`);
-                    closeModal('goodreads-modal');
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        function renderGoodreadsBooks(booksList) {
-            const list = document.getElementById('goodreads-book-list');
-            const container = document.getElementById('goodreads-section');
-            if (!list || !container) return;
-
-            // Group by year if present
-            const grouped = {};
-            booksList.forEach(b => {
-                const yr = b.year || 'Unknown';
-                if (!grouped[yr]) grouped[yr] = [];
-                grouped[yr].push(b);
-            });
-
-            let html = '';
-            Object.keys(grouped).sort((a,b)=> (b==="Unknown"?0:parseInt(b))-(a==="Unknown"?0:parseInt(a))).forEach(year => {
-                html += `<h3>${year}</h3>`;
-                html += `<ul>`;
-                grouped[year].forEach(b => {
-                    const imgTag = b.coverUrl ? `<img src="${b.coverUrl}" style="width:80px;height:auto;margin-right:10px;vertical-align:middle;"/>` : '';
-                    const tooltip = b.review ? `<div class=\"tooltip\">${b.review}</div>` : '';
-                    html += `<li class=\"complete\">${imgTag}<strong>${b.title}</strong> by ${b.author} ${b.rating>0?`&nbsp;·&nbsp;<span style=\"color:#f5c842;\">${'★'.repeat(b.rating)}</span>`:''}${tooltip}</li>`;
-                });
-                html += `</ul>`;
-            });
-            list.innerHTML = html;
-            container.style.display = 'block';
-        }
-    </script>
-    <script>
-        // Keep the embedded language explorer tall enough to show its current view.
-        window.addEventListener('message', function (event) {
-            const frame = document.getElementById('vocabulary-frame');
-            if (!frame || event.source !== frame.contentWindow) return;
-            if (event.data && event.data.type === 'vocabulary-height') {
-                const height = Number(event.data.height);
-                if (Number.isFinite(height) && height >= 600 && height <= 10000) {
-                    frame.style.height = Math.ceil(height) + 'px';
-                }
-            }
-        });
-    </script>
+      </div>
+      <aside class="map-detail" id="conc-detail">
+        <div class="map-detail-placeholder">Click any word node on the concentric rings to view readings, definitions, and usage comparisons.</div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // Tell the parent homepage how much space the embedded explorer needs.
+    (() => {
+      const reportHeight = () => parent.postMessage({
+        type: 'vocabulary-height',
+        height: Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
+      }, '*');
+      if ('ResizeObserver' in window) new ResizeObserver(reportHeight).observe(document.body);
+      window.addEventListener('load', reportHeight);
+      window.addEventListener('resize', reportHeight);
+      document.addEventListener('click', () => setTimeout(reportHeight, 50));
+    })();
+  </script>
 </body>
-
 </html>
